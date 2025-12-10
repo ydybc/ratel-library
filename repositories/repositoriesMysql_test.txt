@@ -1,0 +1,18 @@
+package repositories
+
+//package repositories
+
+import (
+	//	"zyg/datasource"
+	"testing"
+)
+
+func TestQueryArticleById(t *testing.T) {
+
+	a := QueryArticleById(DB, 153)
+	t.Fatal(a)
+}
+func TestQueryChapterById(t *testing.T) {
+	a := QueryChapterById(DB, 153)
+	t.Fatal(a)
+}

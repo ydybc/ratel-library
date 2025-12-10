@@ -1,0 +1,328 @@
+package main
+
+import (
+	"context"
+	"fmt"
+	"net/http"
+	"os"
+	"time"
+	. "zyg/datamodels"
+	"zyg/repositories"
+	"zyg/service"
+	"zyg/web/controllers"
+
+	"github.com/kataras/iris"
+
+	//	"github.com/kataras/iris/cache"
+	"github.com/BurntSushi/toml"
+	"github.com/dchest/captcha"
+
+	//	"github.com/go-redis/redis"
+	_ "github.com/go-sql-driver/mysql"
+	"github.com/jmoiron/sqlx"
+	"gopkg.in/olivere/elastic.v5"
+
+	//	"github.com/kataras/iris/cache"
+	"github.com/kataras/iris/middleware/logger"
+	"github.com/kataras/iris/middleware/recover"
+	"github.com/kataras/iris/mvc"
+	"github.com/linxGnu/goseaweedfs"
+	"github.com/urfave/cli"
+)
+
+type configs struct {
+	Name          string   `toml:"name"`
+	Url           string   `toml:"url"`
+	UrlM          string   `toml:"urlm"`
+	Addr          string   `toml:"addr"`
+	Class         []string `toml:"class"`
+	MarkMax       int      `toml:"markMax"`
+	OnSon         string   `toml:"onSon"`
+	UrlImg        string   `toml:"imgUrl"`
+	Rec           []int    `toml:"rec"`
+	Dir           dirConfig
+	Weed          weedConfig
+	Mysql         mysqlConfig
+	Redis         redisConfig
+	ElasticSearch elasticSearchConfig
+}
+type dirConfig struct {
+	Template string `toml:"template"`
+	Main     string `toml:"main"`
+	Log      string `toml:"log"`
+	Mainm    string `toml:"mainm"`
+	Logm     string `toml:"logm"`
+	Img      string `toml:"img"`
+}
+type weedConfig struct {
+	Master  string   `toml:"master"`
+	Filer   []string `toml:"filer"`
+	Volume  []string `toml:"volume"`
+	Timeout duration `toml:"timeout"`
+}
+type mysqlConfig struct {
+	Addr string `toml:"addr"`
+}
+type redisConfig struct {
+	Addr       string   `toml:"addr"`
+	Pass       string   `toml:"pass"`
+	SessDb     int      `toml:"sessDb"`
+	SessExpiry duration `toml:"sessExpiry"`
+	BookDb     int      `toml:"bookDb"`
+	BookExpiry duration `toml:"bookExpiry"`
+	Tag        string   `toml:"tag"`
+}
+type elasticSearchConfig struct {
+	Host  string `toml:"host"`
+	Index string `toml:"index"`
+}
+type duration struct {
+	time.Duration
+}
+
+var (
+	Config configs
+	DB     sqlx.DB
+	///-------------------------------
+//	templateDir = "views"
+//	serverDir   = ""
+//	logDir      = ""
+//	addr        = "yxj.com:8080"
+)
+
+func main() {
+	//-------------------初始化变量-------------------------------------
+	var configDir string
+	appcli := cli.NewApp()
+	appcli.Name = "RatelWebServer"
+	appcli.Version = "1.0.0"
+	appcli.Flags = []cli.Flag{
+		cli.StringFlag{
+			Name:        "config,c",
+			Value:       "config.toml",
+			Usage:       "is config dir",
+			Destination: &configDir,
+		},
+	}
+	appcli.Action = func(c *cli.Context) error {
+		fmt.Printf("start RatelWebServer")
+		return nil
+	}
+	// 接受os.Args启动程序
+	appcli.Run(os.Args)
+	////////////////解析toml////////////
+	if _, err := toml.DecodeFile(configDir, &Config); err != nil {
+		fmt.Println(err)
+		return
+	}
+	//--------------------------------------------------------
+	repositories.RedisConfig.Addr = Config.Redis.Addr
+	repositories.RedisConfig.Pass = Config.Redis.Pass
+	repositories.RedisConfig.Tag = Config.Redis.Tag
+	repositories.RedisConfig.BookDb = Config.Redis.BookDb
+	repositories.RedisConfig.SessDb = Config.Redis.SessDb
+	repositories.Sw = goseaweedfs.NewSeaweed("http", Config.Weed.Master, Config.Weed.Filer, 2*1024*1024, Config.Weed.Timeout.Duration)
+	repositories.SwConfig.Master = Config.Weed.Master
+	repositories.SwConfig.Filer = Config.Weed.Filer
+	repositories.SwConfig.Volume = Config.Weed.Volume
+	repositories.SwConfig.Timeout = Config.Weed.Timeout.Duration
+	repositories.DB = mysqlLink(Config.Mysql.Addr)
+	service.CacheTime.RedisBookExpiry = Config.Redis.BookExpiry.Duration
+	service.CacheTime.RedisSessExpiry = Config.Redis.SessExpiry.Duration
+	service.RecIdList = Config.Rec
+	repositories.EsClient = EsLink(Config.ElasticSearch.Host)
+	Scon.EsIndex = Config.ElasticSearch.Index
+	Web.Name = Config.Name
+	Web.Class = Config.Class
+	Web.Url = Config.Url
+	Web.UrlM = Config.UrlM
+	Web.UrlImg = Config.UrlImg
+	//fmt.Printf("%v", Config)
+	f := newLogFile()
+	app := iris.New()
+	//（可选）添加两个内置处理程序
+	// 可以从任何http相关的恐慌中恢复
+	// 并将请求记录到终端。
+	app.Use(recover.New())
+	app.Use(logger.New())
+	//app.Logger().SetLevel("debug")
+	app.Logger().SetLevel("error")
+	app.Logger().SetOutput(f)
+	////注册域名头
+	//www := app.Subdomain("www")
+	www := app.WWW()
+	/////错误控制
+	app.OnErrorCode(iris.StatusNotFound, NotFoundHandler)
+	app.OnErrorCode(iris.StatusInternalServerError, InternalServerError)
+	app.OnErrorCode(iris.StatusServiceUnavailable, ServiceUnavailable)
+	app.OnErrorCode(iris.StatusForbidden, StatusForbiddenHandler)
+	/////载入模板
+	//app.RegisterView(iris.HTML(Config.Dir.Template, ".html").Reload(true))
+	app.RegisterView(iris.HTML(Config.Dir.Template, ".html"))
+	www.Get("/captcha/{f:path}", iris.FromStd(captcha.Server(126, 39)))
+	fileserverjs := www.StaticHandler(Config.Dir.Main+"js", false, true)
+	js := iris.StripPrefix("/js", fileserverjs)
+	www.Get("/js/{f:path}", js)
+
+	fileservercss := www.StaticHandler(Config.Dir.Main+"css", false, true)
+	css := iris.StripPrefix("/css", fileservercss)
+	www.Get("/css/{f:path}", css)
+	fileserveri := www.StaticHandler(Config.Dir.Main+"i", false, true)
+	i := iris.StripPrefix("/i", fileserveri)
+	www.Get("/i/{f:path}", i)
+	fileserverimg := www.StaticHandler(Config.Dir.Main+"img", false, true)
+	img := iris.StripPrefix("/img", fileserverimg)
+	www.Get("/img/{f:path}", img)
+
+	fileserverfonts := www.StaticHandler(Config.Dir.Main+"fonts", false, true)
+	fonts := iris.StripPrefix("/fonts", fileserverfonts)
+	www.Get("/fonts/{f:path}", fonts)
+	// app.Get("/static/{f:path}", h)
+	//app.SPA(fileserver)
+	//app.RegisterView(iris.HTML("./views", ".html").Reload(true))
+	// 基于根路由器服务控制器， "/".
+	//注册控制器
+	mvc.New(www).Handle(new(controllers.MainController))
+	mvc.New(www.Party("/read")).Handle(new(controllers.ReadController))
+	//	mvc.New(www.Party("/list", cache.Handler(time.Hour*6))).Handle(new(controllers.ListController))
+	//	mvc.New(www.Party("/full", cache.Handler(time.Hour*6))).Handle(new(controllers.FullController))
+	//mvc.New(www.Party("/list")).Handle(new(controllers.ListController))
+	//mvc.New(www.Party("/full")).Handle(new(controllers.FullController))
+	mvc.New(www.Party("/bookcase")).Handle(new(controllers.BookCaseController))
+	app.SubdomainRedirect(app, www)
+	if Config.OnSon != "" {
+		M := app.Subdomain(Config.OnSon)
+		/////错误控制
+		//		app.OnErrorCode(iris.StatusNotFound, NotFoundHandler)
+		//		app.OnErrorCode(iris.StatusInternalServerError, InternalServerError)
+		//		app.OnErrorCode(iris.StatusServiceUnavailable, ServiceUnavailable)
+		//		app.OnErrorCode(iris.StatusForbidden, StatusForbiddenHandler)
+		/////载入模板
+		//app.RegisterView(iris.HTML(Config.Dir.Template, ".html"))
+		M.Get("/captcha/{f:path}", iris.FromStd(captcha.Server(126, 39)))
+		fileserverjs := M.StaticHandler(Config.Dir.Mainm+"js", false, true)
+		js := iris.StripPrefix("/js", fileserverjs)
+		M.Get("/js/{f:path}", js)
+
+		fileservercss := M.StaticHandler(Config.Dir.Mainm+"css", false, true)
+		css := iris.StripPrefix("/css", fileservercss)
+		M.Get("/css/{f:path}", css)
+
+		fileserveri := M.StaticHandler(Config.Dir.Mainm+"i", false, true)
+		i := iris.StripPrefix("/i", fileserveri)
+		M.Get("/i/{f:path}", i)
+
+		fileserverimg := M.StaticHandler(Config.Dir.Mainm+"img", false, true)
+		img := iris.StripPrefix("/img", fileserverimg)
+		M.Get("/img/{f:path}", img)
+
+		fileserverfonts := M.StaticHandler(Config.Dir.Mainm+"fonts", false, true)
+		fonts := iris.StripPrefix("/fonts", fileserverfonts)
+		M.Get("/fonts/{f:path}", fonts)
+		// app.Get("/static/{f:path}", h)
+		//app.SPA(fileserver)
+		//app.RegisterView(iris.HTML("./views", ".html").Reload(true))
+		// 基于根路由器服务控制器， "/".
+		//注册控制器
+		mvc.New(M).Handle(new(controllers.MainMController))
+		mvc.New(M.Party("/read")).Handle(new(controllers.ReadMController))
+		//mvc.New(M.Party("/list")).Handle(new(controllers.ListMController))
+		mvc.New(M.Party("/bookcase")).Handle(new(controllers.BookCaseMController))
+		//app.SubdomainRedirect(app, M)
+	}
+	Img := app.Subdomain("img")
+	fileserverimg = Img.StaticHandler(Config.Dir.Img, false, true)
+	ImgDir := iris.StripPrefix("/", fileserverimg)
+	Img.Get("/{f:path}", ImgDir)
+	//app.SubdomainRedirect(app, Img)
+	server := &http.Server{
+		Addr: Config.Addr,
+		//Addr: "yxj.com:8080",
+		//Handler:     handler,
+		ReadTimeout:  10 * time.Second,
+		WriteTimeout: 20 * time.Second,
+	}
+
+	app.Run(iris.Server(server), iris.WithoutServerError(iris.ErrServerClosed))
+	//app.Run(iris.Addr("yxj.com:8080"))
+	//---------服务器
+	//app.Run(iris.Addr("yixuanju.com:80"))
+
+}
+func StatusForbiddenHandler(ctx iris.Context) {
+	errinfo := PagesState{Err: "403",
+		ErrInfo:     "没有找到您所访问的页面",
+		ErrSynopsis: "没有找到您所访问的页面,他可能已经迁移到其他位置!",
+		Web:         Web}
+	ctx.ViewData("errinfo", errinfo)
+	ctx.View("pubstate.html")
+}
+func NotFoundHandler(ctx iris.Context) {
+	errinfo := PagesState{Err: "404",
+		ErrInfo:     "没有找到您所访问的页面",
+		ErrSynopsis: "没有找到您所访问的页面,他可能已经迁移到其他位置!",
+		Web:         Web}
+	ctx.ViewData("errinfo", errinfo)
+	ctx.View("pubstate.html")
+}
+func InternalServerError(ctx iris.Context) {
+	//ctx.HTML("500气死我也")
+	errinfo := PagesState{Err: "500",
+		ErrInfo:     "服务器出现问题",
+		ErrSynopsis: "服务器出现问题,请稍后重试!",
+		Web:         Web}
+	ctx.ViewData("errinfo", errinfo)
+	ctx.View("pubstate.html")
+}
+func ServiceUnavailable(ctx iris.Context) {
+	errinfo := PagesState{Err: "503",
+		ErrInfo:     "服务器繁忙请稍后重试",
+		ErrSynopsis: "服务器繁忙请稍后重试",
+		Web:         Web}
+	ctx.ViewData("errinfo", errinfo)
+	ctx.View("pubstate.html")
+}
+func todayFilename() string {
+	today := time.Now().Format("Jan 02 2006")
+	return today + ".txt"
+}
+
+func newLogFile() *os.File {
+	filename := todayFilename()
+	// Open the file, this will append to the today's file if server restarted.
+	f, err := os.OpenFile(Config.Dir.Log+filename, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
+	if err != nil {
+		panic(err)
+	}
+	return f
+}
+
+func (d *duration) UnmarshalText(text []byte) error {
+	var err error
+	d.Duration, err = time.ParseDuration(string(text))
+	return err
+}
+func mysqlLink(Dsn string) *sqlx.DB {
+	//var err error
+	db, err := sqlx.Open("mysql", Config.Mysql.Addr)
+	if err != nil {
+		panic(err)
+		return db
+	}
+	db.SetConnMaxLifetime(time.Second * 599)
+	db.SetMaxIdleConns(100)
+	return db
+}
+func EsLink(host string) *elastic.Client {
+	var err error
+	Client, err := elastic.NewClient(elastic.SetURL(host))
+	if err != nil {
+		panic(err)
+	}
+	info, code, err := Client.Ping(host).Do(context.Background())
+	if err != nil {
+		panic(err)
+	}
+	fmt.Printf("Elasticsearch returned with code %d and version %s\n", code, info.Version.Number)
+	return Client
+}

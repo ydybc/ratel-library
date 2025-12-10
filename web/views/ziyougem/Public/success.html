@@ -1,0 +1,71 @@
+<!doctype html>
+<html class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>跳转提示 - {:C('WEB_NAME')}</title>
+  <meta name="description" content="<?php echo($message); ?>.{:C('WEB_NAME')}">
+  <meta name="keywords" content="<?php echo($message); ?>,{:C('WEB_NAME')}">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <link rel="icon" type="image/png" href="/i/favicon.png">
+  <link rel="stylesheet" href="http://cdn.amazeui.org/amazeui/2.4.2/css/amazeui.min.css">
+  <link rel="stylesheet" href="/css/app.css">
+</head>
+<body>
+<header data-am-widget="header" class="am-header am-header-default ">
+  <div class="am-header-left am-header-nav">
+    <a href="/#left-link" class="">
+      <span class="am-header-nav-title">首页</span>
+      <i class="am-header-icon am-icon-home"></i>
+    </a>
+  </div>
+  <h1 class="am-header-title"><?php echo($message); ?></h1>
+<nav data-am-widget="menu" class="am-menu  am-menu-offcanvas1" data-am-menu-offcanvas>
+  <a href="javascript: void(0)" class="am-menu-toggle am-meun-left-nav">
+    <span class="am-menu-toggle-title">菜单</span>
+    <i class="am-menu-toggle-icon am-icon-angle-right"></i>
+  </a>
+  <div class="am-offcanvas">
+    <div class="am-offcanvas-bar">
+      <ul class="am-menu-nav sm-block-grid-1">		
+        <li class="am-parent">
+          <a href="##">书籍分类</a>
+          <ul class="am-menu-sub am-collapse  sm-block-grid-2 ">
+          <for start="1" end="11">
+            <li class="">
+              <a href="{:U('/list/'.$i)}">{:C('N_CLASS.N'.$i)}</a>
+            </li>
+          </for>
+          </ul>
+        </li>
+
+      </ul>
+    </div>
+  </div>
+</nav>
+</header>
+<div class="am-g am-seccess-head">
+    <h2 class="am-article-title"><?php echo($message); ?></h2>
+    <div class="am-alert am-alert-success am-seccess-alert">
+  页面自动 <a id="href" href="<?php echo($jumpUrl); ?>">跳转</a> 倒计时： <b id="wait"><?php echo($waitSecond); ?></b>
+</div>
+    
+  </div>
+<script type="text/javascript">
+(function(){
+var wait = document.getElementById('wait'),href = document.getElementById('href').href;
+var interval = setInterval(function(){
+	var time = --wait.innerHTML;
+	if(time <= 0) {
+		location.href = href;
+		clearInterval(interval);
+	};
+}, 1000);
+})();
+</script>
+<script src="http://cdn.staticfile.org/jquery/2.1.1-rc2/jquery.min.js"></script>
+<script src="http://cdn.amazeui.org/amazeui/2.4.2/js/amazeui.min.js"></script>
+</body>
+</html>

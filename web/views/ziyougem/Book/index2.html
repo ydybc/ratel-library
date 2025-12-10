@@ -1,0 +1,173 @@
+<!doctype html>
+<html class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>{$articleinfo['articlename']}/{$articleinfo['author']} - {:C('WEB_NAME')}</title>
+  <meta name="description" content="{$articleinfo['articlename']}手机阅读最新章节列表,《{$articleinfo['articlename']}》{$articleinfo['author']}手机阅读,{:C('WEB_NAME')}">
+  <meta name="keywords" content="{$articleinfo['articlename']},{$articleinfo['author']},{:C('WEB_NAME')}">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <link rel="icon" type="image/png" href="/i/favicon.png">
+  <link rel="stylesheet" href="/css/amazeui.min.css">
+  <link rel="stylesheet" href="/css/app.css">
+  <script>
+	var _hmt = _hmt || [];
+	(function() {
+	  var hm = document.createElement("script");
+	  hm.src = "//hm.baidu.com/hm.js?d47100e7a75efa01e3420a5cbf5c7d95";
+	  var s = document.getElementsByTagName("script")[0]; 
+	  s.parentNode.insertBefore(hm, s);
+	})();
+  </script>
+</head>
+<body>
+<!-- Header -->
+<header data-am-widget="header" class="am-header am-header-default am-header-fixed">
+  <div class="am-header-left am-header-nav">
+    <a href="/">
+      <span class="am-header-nav-title">首页</span>
+      <i class="am-header-icon am-icon-home"></i>
+    </a>
+  </div>
+  <h1 class="am-header-title">{$articleinfo['articlename']}</h1>
+<nav data-am-widget="menu" class="am-menu  am-menu-offcanvas1" data-am-menu-offcanvas>
+  <a href="javascript: void(0)" class="am-menu-toggle am-meun-left-nav">
+    <span class="am-menu-toggle-title">菜单</span>
+    <i class="am-menu-toggle-icon am-icon-angle-right"></i>
+  </a>
+  <div class="am-offcanvas">
+    <div class="am-offcanvas-bar">
+      <ul class="am-menu-nav sm-block-grid-1">
+		<li>
+		  <a href="{:U('/bookmark/')}">进入书架</a>
+		</li>
+		<li>
+		  <a href="{:U('/search/')}">站内搜索</a>
+		</li>
+        <li class="am-parent">
+          <a href="##">书籍分类</a>
+          <ul class="am-menu-sub am-collapse  sm-block-grid-2 ">
+          <for start="1" end="11">
+            <li>
+              <a href="{:U('/list/'.$i)}">{:C('N_CLASS.N'.$i)}</a>
+            </li>
+          </for>
+          </ul>
+        </li>
+
+      </ul>
+    </div>
+  </div>
+</nav>
+</header>
+<if condition="!empty($index)">
+<div data-am-widget="intro" class="am-intro am-cf am-intro-default">
+  <div class="am-g am-intro-bd">
+    <div class="am-intro-left am-u-sm-5">
+      <img src="{:imgurl($articleinfo['articleid'],$articleinfo['imgflag'])}" alt="{$articleinfo['articlename']}"/>
+    </div>
+    <h3 class="am-text-primary">{$articleinfo['articlename']}</h3>
+    <div>
+    <span class="am-badge am-badge-warning am-radius">作者:</span>
+    <span>{$articleinfo['author']}</span>
+    </div>
+    <span class="am-badge am-badge-warning am-radius">分类:</span>
+    <span>{:C('N_CLASS.N'.$articleinfo['sortid'])}</span>
+    <div class="am-intro-right am-u-sm-7 line-clamp">
+    <span class="am-badge am-badge-warning am-radius">简介:</span>
+	{$articleinfo['intro']|str_replace=array('<div>','</div>','</ul>','<ul>','<li>','</li>','<p>','</p>'),'',###}
+    </div>
+  </div>
+</div>
+<button id="bookmark" type="button" class="am-btn am-btn-secondary am-btn-block" >加入书签</button>
+<div data-am-widget="list_news" class="am-list-news am-list-news-default">
+  <div data-am-widget="titlebar" class="am-titlebar am-titlebar-multi">
+    <h3 class="am-titlebar-title ">最新更新</h3>
+  </div>
+  <nav class="am-list-news-bd">
+    <ul class="am-list am-list-border am-list-striped">
+      <foreach name="lastuplist" item="vo">
+      <li class="am-g">
+        <a href="{:U('/read/'.$vo['articleid'].'/'.$vo['chapterid'])}" class="am-list-item-hd">{$vo.chaptername}</a>
+      </li>
+      </foreach>
+    </ul>
+  </nav>
+  
+</div>
+</if>
+<script type="text/javascript">
+var cpro_id="u2269986";
+(window["cproStyleApi"] = window["cproStyleApi"] || {})[cpro_id]={at:"3",pat:"8",cpro_h:"30",tn:"template_inlay_all_mobile_lu_native_ad_txt",rss1:"#FFFFFF",titFF:"%E5%BE%AE%E8%BD%AF%E9%9B%85%E9%BB%91",titFS:"16",rss2:"#000000",conpl:"20",conpr:"20",desfs:"10",rss3:"#FFFFFF",desbc:"#DCDCDC",pimc:"20",titSU:"0"}
+</script>
+<script src="http://cpro.baidustatic.com/cpro/ui/cm.js" type="text/javascript"></script>
+<div data-am-widget="list_news" class="am-list-news am-list-news-default" id="novel-list-ajax">
+  <div data-am-widget="titlebar" class="am-titlebar am-titlebar-multi" >
+    <h3 class="am-titlebar-title ">
+    <if condition="empty($index)"><a href="{:U('novel/'.$overlist[0]['articleid'])}">{$overlist[0]['articlename']}</a><else />章节列表</if>
+    </h3>
+  <nav class="am-titlebar-nav">
+    <a>{$pagetxt}</a>
+  </nav>
+  </div>
+  <nav class="am-list-news-bd">
+    <ul class="am-list am-list-border am-list-striped">
+      <foreach name="overlist" item="vo">
+      <li class="am-g">
+        <a href="{:U('/read/'.$vo['articleid'].'/'.$vo['chapterid'])}" class="am-list-item-hd">{$vo.chaptername}</a>
+      </li>
+      </foreach>
+    </ul>
+</footer>
+  </nav>
+</div>
+
+  <ul data-am-widget="pagination" class="am-pagination  am-pagination-select">
+  <li class="am-pagination-prev ">
+  <button type="button" id="uppage" class="am-btn am-btn-secondary am-radius">上一页</button>
+  </li>
+  {$page}
+  <li class="am-pagination-next ">
+  <button type="button" id="downpage" class="am-btn am-btn-secondary am-radius">下一页</button>
+  </li>
+  </ul> 
+  
+<!-- Gallery -->
+
+<div id="listjs">
+<div class="am-alert" id="alert-text-1" data-am-alert>
+<button type="button" class="am-close">&times;</button>
+<p class="am-text-center">点击上方按钮<i class="am-icon-arrow-up"></i>可快速翻页</p>
+</div>
+</div>
+<div id="hm_t_75300"></div>
+<!-- Navbar -->
+<footer data-am-widget="footer" class="am-footer am-footer-default" data-am-footer="{  }">
+  <div class="am-footer-switch">
+    <span class="am-footer-ysp" data-rel="mobile" data-am-modal="{target: '#am-switch-mode'}">{$articleinfo['articlename']}</span>
+    <span class="am-footer-divider">|</span>
+    <a id="godesktop" href="/">{:C('WEB_NAME')}</a>
+  </div>
+  <div class="am-footer-miscs ">
+    <p>由
+      <a href="http://www.ziyouge.com/" title="{:C('WEB_NAME')}" target="_blank">{:C('WEB_NAME')}</a>提供技术支持</p>
+    <p>Suitable for mobile phone.2015</p>
+  </div>
+</footer>
+<script>
+	var articleid = "{$articleinfo['articleid']}";
+	var chapterid = 0;
+</script>
+
+<script src="/js/jquery.min.js"></script>
+<script src="/js/amazeui.min.js"></script>
+<script src="/js/jquery.form.js"></script>
+<script src="/js/app.js"></script>
+<script type="text/javascript">
+    var cpro_id = "u2274966";
+</script>
+<script src="http://cpro.baidustatic.com/cpro/ui/cm.js" type="text/javascript"></script>
+</body>
+</html>

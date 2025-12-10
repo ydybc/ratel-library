@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>{{.Book.CurrentChapter.CurrentChapterName}}_{{.Book.Article.Articlename}}_{{.Book.Article.Author}}/著_紫幽阁</title>
+		<meta name="description" content="章名:{{.Book.CurrentChapter.CurrentChapterName}}，书名:{{.Book.Article.Articlename}}。享乐读书一紫幽阁。站内小说由会员转载自网络，版权归作者所有。如转载侵犯了您的权益，请联系本站，我们将核实删除！" />
+		<meta name="keywords" content="{{.Book.Article.Articlename}}最新章节，{{.Book.CurrentChapter.CurrentChapterName}}">
+		<meta http-equiv="Cache-Control" content="no-siteapp" />
+		<link rel="icon" type="image/png" href="/i/favicon.png">
+		<link rel="stylesheet" type="text/css" href="/css/amazeui.css" />
+		<link rel="stylesheet" type="text/css" href="/css/app.css" />
+		<script>
+		var _hmt = _hmt || [];
+		(function() {
+		  var hm = document.createElement("script");
+		  hm.src = "https://hm.baidu.com/hm.js?2b86ba7cebe69b290c2ba632f4239768";
+		  var s = document.getElementsByTagName("script")[0]; 
+		  s.parentNode.insertBefore(hm, s);
+		})();
+		</script>
+	</head>
+	<body>
+		<header class="am-topbar ">
+			<div class="am-box am-g am-box-p">
+				<div class="am-topbar-brand">
+					<a href="/">紫幽阁</a>
+				</div>
+				<button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-warning am-show-sm-only" data-am-collapse="{target: '#doc-topbar-collapse'}"><span class="am-sr-only">导航切换</span> <span class="am-icon-bars"></span></button>
+				<div class="am-collapse am-topbar-collapse" id="doc-topbar-collapse">
+					<ul class="am-nav am-nav-pills am-topbar-nav">
+						<li>
+							<a href="/full">全本小说</a>
+						</li>
+						<li>
+							<a href="/list">更新列表</a>
+						</li>
+
+					</ul>
+
+					<div class="am-topbar-right">
+						<button type="button" class="am-btn am-btn-default am-topbar-btn am-btn-sm" id="collectbutton">报错催更</button>
+						<a class="am-btn am-btn-warning am-btn-purple am-topbar-btn am-btn-sm" href="{:U('/bookcase')}" target="_blank">书架</a>
+					</div>
+				</div>
+			</div>
+		</header>
+			<div class="am-box am-g am-box-p">
+				<h2 id="am-book-h3">{{.Book.CurrentChapter.CurrentChapterName}}/{{.Book.Article.Articlename}}</h2>
+			</div>
+		<nav class="am-box am-g am-box-p">
+			<ol class="am-breadcrumb am-breadcrumb-slash am-book-read">
+			  <li><a href="/">首页</a></li>
+			  <li><a href="/book/{{$.Book.Article.Articleid}}">{{.Book.Article.Articlename}}</a></li>
+			  <li class="am-active">{{.Book.CurrentChapter.CurrentChapterName}}</li>
+			</ol>
+		</nav>
+		<main class="am-box am-g am-box-p">
+
+
+			<div class="am-btn-group am-btn-group-justify">
+			{{if .Book.CurrentChapter.UpChapterId}}
+				<a href="/read/{{$.Book.Article.Articleid}}/{{$.Book.CurrentChapter.UpChapterId}}" class="am-btn am-btn-default" role="button">上一章</a>
+			{{else}}
+				<a class="am-btn am-btn-default" role="button" disabled="disabled">上一章</a>
+			{{end}}
+				<a href="/book/{{$.Book.Article.Articleid}}" class="am-btn am-btn-default" role="button">返回目录</a>
+			{{if .Book.CurrentChapter.DownChapterId}}
+				<a href="/read/{{$.Book.Article.Articleid}}/{{$.Book.CurrentChapter.DownChapterId}}" class="am-btn am-btn-default" role="button">下一章</a>
+			{{else}}
+				<a class="am-btn am-btn-default" role="button" disabled="disabled">下一章</a>
+			{{end}}
+				<a class="am-btn am-btn-default" id="addmark" role="button">加入书架</a>
+			  <!--<a class="am-btn am-btn-default" id="puterror" role="button">报错</a>-->
+			</div>
+			<div class="am-book-read-select am-btn-group-justify">
+				<select data-am-selected="{btnWidth: '25%',btnSize: 'sm'}"  id="am-font-color">
+					<optgroup label="字体颜色">
+						<option value="am-read-color-hl">海蓝</option>
+						<option value="am-read-color-ql">青蓝</option>
+						<option value="am-read-color-sh">深灰</option>
+						<option value="am-read-color-qh">青灰</option>
+						<option value="am-read-color-ch">橙黄</option>
+						<option value="am-read-color-mh">玫褐</option>
+						<option value="am-read-color-ls">栗色</option>
+						<option value="am-read-color-th">土黄</option>
+						<option value="am-read-color-sl">深绿</option>
+						<option value="am-read-color-zl">藻绿</option>
+						<option value="am-read-color-mh2">玫红</option>
+						<option value="am-read-color-sz">深紫</option>
+						<option value="am-read-color-hs">黑色</option>
+					</optgroup>
+				</select>
+				<select data-am-selected="{btnWidth: '25%',btnSize: 'sm'}" id="am-font-family">
+					<optgroup label="文字字体">
+						<option value="am-serif">宋体</option>
+						<option value="am-kai">楷体</option>
+						<option value="am-sans-serif">默认</option>
+						<option value="am-monospace">宽体</option>
+						<option value="am-read-font-yy">幼圆</option>
+						<option value="am-read-font-ls">隶书</option>
+						<option value="am-read-font-hwxw">华文新魏</option>
+						<option value="am-read-font-fzqt">方正启体</option>
+						<option value="am-read-font-wryh">微软雅黑</option>
+					</optgroup>
+				</select>
+				<select data-am-selected="{btnWidth: '25%',btnSize: 'sm'}" id="am-font-size">
+					<optgroup label="文字大小">
+						<option value="am-text-xs">小号</option>
+						<option value="am-text-sm">较小</option>
+						<option value="am-text-default">默认</option>
+						<option value="am-text-lg">较大</option>
+						<option value="am-text-xl">大号</option>
+						<option value="am-text-xxl">特大</option>
+						<option value="am-text-xxxl">最大</option>
+					</optgroup>
+				</select>
+				<select data-am-selected="{btnWidth: '25%',btnSize: 'sm'}" id="am-background-color">
+					<optgroup label="背景颜色">
+						<option value="am-read-bg-color-hs">灰色</option>
+						<option value="am-read-bg-color-ys">银色</option>
+						<option value="am-read-bg-color-mh">明黄</option>
+						<option value="am-read-bg-color-cs">茶色</option>
+						<option value="am-read-bg-color-ly">绿意</option>
+						<option value="am-read-bg-color-cl">草绿</option>
+						<option value="am-read-bg-color-hf">红粉</option>
+						<option value="am-read-bg-color-bx">白雪</option>
+						<option value="am-read-bg-color-qh">漆黑</option>
+					</optgroup>
+				</select>
+			</div>
+			<article id="am-read-centent">
+				{{.Content}}
+			</article>
+			<div class="am-btn-group am-btn-group-justify">
+			{{if .Book.CurrentChapter.UpChapterId}}
+				<a href="/read/{{$.Book.Article.Articleid}}/{{$.Book.CurrentChapter.UpChapterId}}" class="am-btn am-btn-default" role="button">上一章</a>
+			{{else}}
+				<a class="am-btn am-btn-default" role="button" disabled="disabled">上一章</a>
+			{{end}}
+				<a href="/book/{{$.Book.Article.Articleid}}" class="am-btn am-btn-default" role="button">返回目录</a>
+			{{if .Book.CurrentChapter.DownChapterId}}
+				<a href="/read/{{$.Book.Article.Articleid}}/{{$.Book.CurrentChapter.DownChapterId}}" class="am-btn am-btn-default" role="button">下一章</a>
+			{{else}}
+				<a class="am-btn am-btn-default" role="button" disabled="disabled">下一章</a>
+			{{end}}
+				<a class="am-btn am-btn-default" id="addmark" role="button">加入书架</a>
+			</div>
+		</main>
+		<hr data-am-widget="divider" style="" class="am-divider am-divider-dotted"/>
+		<footer data-am-widget="footer" class="am-footer am-footer-default">
+			<div class="am-text-center">
+				<span class="am-footer-ysp">
+					<a id="godesktop" href="/">电脑版</a>
+				</span>
+				<span class="am-footer-divider"> | </span>
+				<span>
+					<a href="http://m.ziyouge.com">手机版</a>
+				</span>
+			</div>
+			<p class="am-text-center am-footer-p">
+				本站拒绝任何色情小说，一经发现，即作删除本站所收录作品、社区话题、书库评论属其个人行为，与本站立场无关
+			</p>
+			<div class="am-text-center"> 紫幽阁 BY 2017 </div>
+		</footer>
+		<script type="text/javascript">
+			var bookid = {{.Book.Article.Articleid}};
+			var chapterid = {{.Book.CurrentChapter.CurrentChapterId}};
+			var addUrl = '/addmark';
+			var delUrl = '/delmark';
+			var moveUrl = '/movemark';
+			var bookCaseUrl = '/bookcase/';
+		</script>
+		<script src="/js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/js/amazeui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/js/jquery.cookie.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/js/app.js" type="text/javascript" charset="utf-8"></script>
+		<script>
+		(function(){
+			var bp = document.createElement('script');
+			var curProtocol = window.location.protocol.split(':')[0];
+			if (curProtocol === 'https') {
+				bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+			}
+			else {
+				bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+			}
+			var s = document.getElementsByTagName("script")[0];
+			s.parentNode.insertBefore(bp, s);
+		})();
+		</script>
+		<script>(function(){
+		var src = (document.location.protocol == "http:") ? "http://js.passport.qihucdn.com/11.0.1.js?01c0b6cda733db46d417c5c5a07a9937":"https://jspassport.ssl.qhimg.com/11.0.1.js?01c0b6cda733db46d417c5c5a07a9937";
+		document.write('<script src="' + src + '" id="sozz"><\/script>');
+		})();
+		</script>
+	</body>
+</html>

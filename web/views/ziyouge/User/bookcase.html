@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>用户书架_紫幽阁</title>
+		<meta name="description" content="欢迎您进入书架！紫幽阁用户管理书架" />
+		<meta name="keywords" content="紫幽阁，用户书架">
+		<meta http-equiv="Cache-Control" content="no-siteapp" />
+		<link rel="icon" type="image/png" href="/i/favicon.png">
+		<link rel="stylesheet" type="text/css" href="/css/amazeui.css" />
+		<link rel="stylesheet" type="text/css" href="/css/app.css" />
+		<script>
+		var _hmt = _hmt || [];
+		(function() {
+		  var hm = document.createElement("script");
+		  hm.src = "https://hm.baidu.com/hm.js?2b86ba7cebe69b290c2ba632f4239768";
+		  var s = document.getElementsByTagName("script")[0]; 
+		  s.parentNode.insertBefore(hm, s);
+		})();
+		</script>
+	</head>
+
+	<body>
+		<header class="am-topbar ">
+			<div class="am-box am-g am-box-p">
+				<h1 class="am-topbar-brand">
+					<a href="/">紫幽阁</a>
+				</h1>
+				<button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-warning am-show-sm-only" data-am-collapse="{target: '#doc-topbar-collapse'}"><span class="am-sr-only">导航切换</span> <span class="am-icon-bars"></span></button>
+				<div class="am-collapse am-topbar-collapse" id="doc-topbar-collapse">
+					<ul class="am-nav am-nav-pills am-topbar-nav am-index-nav">
+						<li>
+							<a href="/full">全本小说</a>
+						</li>
+						<li>
+							<a href="/list">更新列表</a>
+						</li>
+
+					</ul>
+
+					<div class="am-topbar-right">
+						<a class="am-btn am-btn-warning am-btn-purple am-topbar-btn am-btn-sm" href="/bookcase">书架</a>
+						<a class="am-btn am-btn-warning am-btn-purple am-topbar-btn am-btn-sm" href="/outlogin">退出用户</a>
+					</div>
+				</div>
+			</div>
+		</header>
+
+		<div class="am-box am-g am-box-p">
+			<span class="am-u-lg-6 am-index-padding-bottom">
+					<a href="/"><img src="/i/main.png" width="120px" height="50px" alt="紫幽阁"/></a>
+				</span>
+
+			<div class="am-u-lg-6">
+				<div class="am-input-group">
+					<input type="text" class="am-form-field"  placeholder="请输入关键字进行搜索" id="searchAll">
+					<span class="am-input-group-btn">
+							<button class="am-btn am-btn-default" id="searchBtn" type="button"><span class="am-icon-search"></span> </button>
+					</span>
+				</div>
+			</div>
+		</div>
+		<nav class="am-box am-g am-box-p">
+			<ul class="am-nav am-nav-pills am-nav-justify am-nav-purple am-nav-hover am-index-nav-2">
+				{{range $k, $v := .WebInfo.Class}} 
+				{{if $k}}
+				<li><a href="/list/{{$k}}">{{$v}}</a></li>
+				{{else}} {{end}}
+				{{end}}
+			</ul>
+			<ol class="am-breadcrumb am-breadcrumb-slash am-book-read">
+					<li><a href="/">首页</a></li>
+					<li class="am-active">用户书架</li>
+			</ol>
+		</nav>
+	<main class="am-box am-g">
+
+	<div class="am-u-lg-3">
+		<div class="am-panel am-panel-default">
+			<div class="am-panel-hd am-panel-title am-search-h3">书架信息</div>
+			<div class="am-panel-bd">
+				最多可收藏 <strong>200</strong> 本书<br/> 总共已收藏 <strong>{{.BookcaseCount}}</strong> 本书
+				
+			</div>
+			
+		</div>
+		<div class="am-panel am-panel-default">
+			<div class="am-panel-hd am-panel-title am-search-h3">书架|排序</div>
+			<div class="am-panel-bd">
+					<div class="am-book-read-select am-btn-group-justify">
+					<select id="marklistclass" data-am-selected="{btnWidth: '50%', btnSize: 'sm', btnStyle: 'danger'}">
+						{{range $k,$v:=.BookShelf}}
+						{{if eq $v.Id $.Pages.Class}}
+						<option value="{{$v.Id}}" selected>{{$v.Name}}</option>
+						{{else}}
+						<option value="{{$v.Id}}">{{$v.Name}}</option>
+						{{end}}
+						{{end}}
+					</select>
+					<select id="marklistorder" data-am-selected="{btnWidth: '50%', btnSize: 'sm', btnStyle: 'warning'}">
+						{{if .Pages.Sort}}
+						<option value="0">最后更新</option>
+						<option value="1" selected>最新加入</option>
+						{{else}}
+						<option value="0" selected>最后更新</option>
+						<option value="1">最新加入</option>
+						{{end}}
+					</select>
+					</div>
+			</div>
+		</div>
+		<div class="am-panel am-panel-default">
+			<div class="am-panel-hd am-panel-title am-search-h3">书架整理</div>
+			<div class="am-panel-bd">
+					<select id="mark-list-set" data-am-selected="{btnWidth: '100%'}">
+						{{range $k,$v:=.BookShelf}}
+						{{if eq $v.Id $.Pages.Class}}
+						<option value="{{$v.Id}}" selected>{{$v.Name}}</option>
+						{{else}}
+						<option value="{{$v.Id}}">{{$v.Name}}</option>
+						{{end}}
+						{{end}}
+					</select>
+					<button type="button" class="am-btn am-btn-default am-btn-block" id="am-user-mark-move">移动</button>
+					<button type="button" class="am-btn am-btn-default am-btn-block" id="am-user-mark-del">删除</button>
+			</div>
+	
+			<div class="am-panel-footer">
+				移动书籍到指定书架，<br/>
+				或选择书籍批量删除！
+			</div>
+		</div>
+	</div>
+	<nav class=" am-u-lg-9">
+		<div class="am-panel am-panel-default">
+			<div class="am-panel-hd am-panel-title">
+				{{if .Pages.Class}}
+					<strong>{{.Pages.Class}}</strong> 号书架 - 有 <strong>{{.BookcaseCount}}</strong> 本书
+				{{else}}
+					默认书架 - 有 <strong>{{.BookcaseCount}}</strong> 本书	
+				{{end}}
+			</div>
+			
+				<form class="am-form" data-am-validator>
+					<ul class="am-list am-list-static am-list-border" id="user-book-list">
+					{{range $k,$v:=.BookcaseList}}
+							<li>
+								<article class="am-g">
+									<div class="am-u-sm-2">
+										<img src="{{$v.ImgUrl}}" alt="{{$v.Articlename}}" class="am-img-thumbnail am-radius am-user-list-img">
+									</div>
+									<div class="am-list-info am-u-sm-10">
+										<label class="am-checkbox am-warning am-user-list">
+				
+															<input type="checkbox" name='checkbox' value="{{$v.Articleid}}" data-am-ucheck> 
+														</label>
+		
+										<span class="am-user-list-h3 am-text-truncate"><a data-id="{{$v.Articleid}}" href="/book/{{$v.Articleid}}">{{$v.Articlename}}</a>
+																/<span class="am-user-list-full">{{if $v.Fullflag}}连载{{else}}完结{{end}}</span>
+										<i class="am-icon-close"></i>
+										</span>
+										<span class="am-user-list-span am-text-truncate">
+											  			<p>作者:</p><strong>{{$v.Author}}</strong>
+											  		</span>
+										<span class="am-user-list-span am-text-truncate">
+				  										{{if $.Pages.Class}}
+														<p>所在书架: </p><a href="/bookcase/{{$.Pages.Sort}}/{{$v.Classid}}">书架{$class}</a>
+														{{else}}
+														<p>所在书架: </p><a href="/bookcase/{{$.Pages.Sort}}">默认书架</a>
+														{{end}}
+										</span>
+										<span class="am-user-list-span am-text-truncate">
+											  			<p>书签章节: </p><a href="/read/{{$v.Articleid}}/{{$v.Chapterid}}">{{$v.Chaptername}}</a>
+											  		</span>
+										<span class="am-user-list-span am-text-truncate">
+											  			<p>最新章节: </p><a href="/read/{{$v.Articleid}}/{{$v.Booklastchapterid}}">{{$v.Booklastchapter}}</a>
+											  		</span>
+									</div>
+
+							</li>
+					{{end}}
+					</ul>
+				</form>
+			<div class="am-panel-footer">
+				<ul class="am-pagination am-pagination-right am-list-page">
+					{{range $k,$v:=.Pages.Pages}}
+					{{if eq $v $.Pages.CurrPage}}
+					<li class="am-active"><a href="#"><span class="current">{{$v}}</span></a></li>
+					{{else}}
+					<li><a class="num" href="/bookcase/{{$.Pages.Sort}}/{{$.Pages.Class}}/{{$v}}">{{$v}}</a></li>
+					{{end}}
+					{{end}}
+				</ul>
+			</div>
+		</div>
+	</nav>
+<div class="am-modal am-modal-confirm" tabindex="-1" id="my-confirm">
+  <div class="am-modal-dialog">
+    <div class="am-modal-hd">紫幽阁</div>
+    <div class="am-modal-bd" id="user-book-del">
+      	确定要删除这本书?
+    </div>
+    <div class="am-modal-footer">
+      <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+      <span class="am-modal-btn" data-am-modal-confirm>确定</span>
+    </div>
+  </div>
+</div>
+</main>
+		<hr data-am-widget="divider" style="" class="am-divider am-divider-dotted"/>
+		<footer data-am-widget="footer" class="am-footer am-footer-default">
+			<div class="am-text-center">
+				<span class="am-footer-ysp">
+					<a id="godesktop" href="/">电脑版</a>
+				</span>
+				<span class="am-footer-divider"> | </span>
+				<span>
+					<a href="http://m.ziyouge.com">手机版</a>
+				</span>
+			</div>
+			<p class="am-text-center am-footer-p">
+				本站拒绝任何色情小说，一经发现，即作删除本站所收录作品、社区话题、书库评论属其个人行为，与本站立场无关
+			</p>
+			<div class="am-text-center"> 紫幽阁 BY 2017 </div>
+		</footer>
+		<script type="text/javascript">
+			var addUrl = '/addmark';
+			var delUrl = '/delmark';
+			var moveUrl = '/movemark';
+			var bookCaseUrl = '/bookcase/';
+		</script>
+		<script src="/js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/js/jquery.form.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/js/amazeui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			$(function(){
+				$.fn.amSelected = $.fn.selected.noConflict();
+				$('[data-am-selected]').amSelected();
+			});
+			var markclass = {{.Pages.Class}};
+			var markclassorder = {{.Pages.Sort}};
+		</script>
+		<script src="/js/user.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/js/app.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/js/search.js" type="text/javascript" charset="utf-8"></script>
+</body>
+</html>

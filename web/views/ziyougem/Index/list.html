@@ -1,0 +1,169 @@
+<!doctype html>
+<html class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>{{.SortName}} - {{.WebInfo.Name}}</title>
+  <meta name="description" content="{{.SortName}}最新更新列表,{{.WebInfo.Name}}">
+  <meta name="keywords" content="{{.SortName}},{{.WebInfo.Name}}">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <link rel="icon" type="image/png" href="/i/favicon.png">
+  <link rel="stylesheet" href="http://cdn.amazeui.org/amazeui/2.4.2/css/amazeui.min.css">
+  <link rel="stylesheet" href="/css/app.css">
+  <script>
+	var _hmt = _hmt || [];
+	(function() {
+	  var hm = document.createElement("script");
+	  hm.src = "//hm.baidu.com/hm.js?d47100e7a75efa01e3420a5cbf5c7d95";
+	  var s = document.getElementsByTagName("script")[0]; 
+	  s.parentNode.insertBefore(hm, s);
+	})();
+  </script>
+</head>
+<body>
+<!-- Header -->
+<header data-am-widget="header" class="am-header am-header-default am-header-fixed">
+  <div class="am-header-left am-header-nav">
+    <a href="/">
+      <span class="am-header-nav-title">首页</span>
+      <i class="am-header-icon am-icon-home"></i>
+    </a>
+  </div>
+  <h1 class="am-header-title">{{.SortName}}</h1>
+<nav data-am-widget="menu" class="am-menu  am-menu-offcanvas1" data-am-menu-offcanvas>
+  <a href="javascript: void(0)" class="am-menu-toggle am-meun-left-nav">
+    <span class="am-menu-toggle-title">菜单</span>
+    <i class="am-menu-toggle-icon am-icon-angle-right"></i>
+  </a>
+  <div class="am-offcanvas">
+    <div class="am-offcanvas-bar">
+      <ul class="am-menu-nav sm-block-grid-1">
+
+		<li>
+		  <a href="/bookcase">进入书架</a>
+		</li>
+		<li>
+		  <a href="/search">站内搜索</a>
+		</li>
+        <li class="am-parent">
+          <a href="##">书籍分类</a>
+          <ul class="am-menu-sub am-collapse  sm-block-grid-2 ">
+			{{range $k, $v := .WebInfo.Class}} 
+			{{if $k}}
+            <li><a href="/list/{{$k}}">{{$v}}</a></li>
+			{{end}}
+			{{end}}
+          </ul>
+        </li>
+
+      </ul>
+    </div>
+  </div>
+</nav>
+</header>
+
+<!-- Menu -->
+
+
+<!-- List -->
+<div data-am-widget="list_news" class="am-list-news am-list-news-default">
+  <!--列表标题-->
+  
+  <div class="am-list-news-hd am-cf">
+    <!--带更多链接-->
+    <a href="###">
+      <h2>书籍列表</h2>
+      <span class="am-list-news-more am-fr">{{.Pages.CurrPage}}</span>
+    </a>
+  </div>
+  <div class="am-list-news-bd">
+    <ul class="am-list">
+      <!--缩略图在标题左边-->
+	{{range $k, $v := .ArticleList}}
+	{{if le $k 2}}
+		  <li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-left">
+	        <div class="am-u-sm-4 am-list-thumb">
+	          <a href="/novel/{{$v.Articleid}}">
+	            <img src="{{$v.ImgUrl}}" alt="{{$v.Articlename}}"/>
+	          </a>
+	        </div>
+	        <div class="am-u-sm-8 am-list-main">
+	          <h3 class="am-list-item-hd">
+	            <a href="/novel/{{$v.Articleid}}">{{$v.Articlename}}</a>
+	          </h3>
+	          <div class="am-list-item-text">
+			  {{$v.Intro}}
+			  </div>
+	        </div>
+          </li>
+	{{else}}
+        <li class="am-g am-list-item-dated">
+	      <a href="/novel/{{$v.Articleid}}" class="am-list-item-hd">{{$v.Articlename}}</a>
+	      <span class="am-list-date">{{$v.Author}}</span>
+        </li>
+	{{end}}
+	{{end}}
+    </ul>
+	<script type="text/javascript">
+	var cpro_id="u2269987";
+	(window["cproStyleApi"] = window["cproStyleApi"] || {})[cpro_id]={piw:"0",pih:"0",at:"3",pat:"15",cpro_h:"150",tn:"template_inlay_all_mobile_lu_native",titFF:"%E5%BE%AE%E8%BD%AF%E9%9B%85%E9%BB%91",titFS:"16",rss2:"#000000",ptFS:"16",ptFC:"#000000",ptFF:"%E5%BE%AE%E8%BD%AF%E9%9B%85%E9%BB%91",conpl:"5",conpr:"5",conpt:"5",conpb:"5",itecpl:"10",ptp:"0",ptn:"2"}
+	</script>
+	<script src="http://cpro.baidustatic.com/cpro/ui/cm.js" type="text/javascript"></script>
+  </div>
+</div>
+
+
+<!-- Gallery -->
+<ul data-am-widget="pagination" class="am-pagination am-pagination-select">
+{{if .Pages.PrevPage}}
+<li class='am-pagination-prev '><a href='/list/{{$.Pages.Class}}/{{$.Pages.PrevPage}}'>上一页</a></li> 
+{{end}}
+<li class='am-pagination-select'>
+	<select name='pageselect' onchange='self.location.href=options[selectedIndex].value'>
+	{{range $k,$v:=.PageSelect}}
+		{{if $k}}
+		{{if eq $k $.Pages.CurrPage}}
+			<option selected = 'selected' >{{$v}}</option>
+		{{else}}
+			<option value='/list/{{$.Pages.Class}}/{{$k}}'>{{$v}}</option>
+		{{end}}		
+		{{end}}
+
+	{{end}}
+	</select>
+</li> 
+{{if .Pages.NextPage}}
+<li class='am-pagination-next '><a href='/list/{{$.Pages.Class}}/{{$.Pages.NextPage}}'>下一页</a></li>
+{{end}}
+</ul>
+<div id="hm_t_70436"></div>
+<!-- Navbar -->
+<footer data-am-widget="footer" class="am-footer am-footer-default" data-am-footer="{  }">
+  <div class="am-footer-switch">
+    <span class="am-footer-ysp" data-rel="mobile" data-am-modal="{target: '#am-switch-mode'}">{{.SortName}}</span>
+    <span class="am-footer-divider">|</span>
+    <a id="godesktop" href="/">{{.WebInfo.Name}}</a>
+  </div>
+  <div class="am-footer-miscs ">
+    <p>由
+      <a href="http://www.ziyouge.com/" title="{{.WebInfo.Name}}" target="_blank">{{.WebInfo.Name}}</a>提供技术支持</p>
+    <p>Suitable for mobile phone.2015</p>
+  </div>
+</footer>
+
+<script src="http://cdn.staticfile.org/jquery/2.1.1-rc2/jquery.min.js"></script>
+<script src="http://cdn.amazeui.org/amazeui/2.4.2/js/amazeui.min.js"></script>
+<script type="text/javascript">
+var cpro_id="u2269984";
+(window["cproStyleApi"] = window["cproStyleApi"] || {})[cpro_id]={cpro_close_time:"10",cpro_show_dist:"5",cpro_enable_hidden_float:"true",xuanting:"3",pat:"6",rss1:"#FFFFFF",titFF:"%E5%BE%AE%E8%BD%AF%E9%9B%85%E9%BB%91",titFS:"14",rss2:"#000000",scale:"20.6",titSU:"0",ptbg:"90",ptp:"0",at:"3",tn:"template_inlay_all_mobile_lu_native",adp:"1",ptt:"0"}
+</script>
+<script src="http://cpro.baidustatic.com/cpro/ui/cm.js" type="text/javascript"></script>
+<script>(function(){
+var src = (document.location.protocol == "http:") ? "http://js.passport.qihucdn.com/11.0.1.js?0fec43a8535417403ac67d5132f4c123":"https://jspassport.ssl.qhimg.com/11.0.1.js?0fec43a8535417403ac67d5132f4c123";
+document.write('<script src="' + src + '" id="sozz"><\/script>');
+})();
+</script>
+</body>
+</html>

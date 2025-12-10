@@ -1,0 +1,17 @@
+  <div data-am-widget="titlebar" class="am-titlebar am-titlebar-multi">
+    <h3 class="am-titlebar-title ">
+    <if condition="empty($index)"><a href="{:U('novel/'.$overlist[0]['articleid'])}">{$overlist[0]['articlename']}</a><else />章节列表</if>
+    </h3>
+  <nav class="am-titlebar-nav">
+    <a>{$pagetxt}</a>
+  </nav>
+  </div>
+  <nav class="am-list-news-bd">
+    <ul class="am-list am-list-border am-list-striped">
+      <foreach name="overlist" item="vo">
+      <li class="am-g">
+        <a href="{:U('/read/'.$vo['articleid'].'/'.$vo['chapterid'])}" class="am-list-item-hd">{$vo.chaptername}</a>
+      </li>
+      </foreach>
+    </ul>
+  </nav>

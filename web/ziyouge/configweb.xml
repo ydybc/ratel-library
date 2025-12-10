@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<main>
+        <name>奕轩居</name>
+        <url>http://www.yixuanju.com</url>
+        <classString>全部,玄幻魔法,武侠修真,都市言情,古代言情,穿越架空,耽美同人,灵异恐怖,竞技游戏,历史军事,其他类型</class>
+	<bookcassAllCount>200</bookcassAllCount>
+        <redisHost>192.168.44.143:6379</redisHost>
+        <redisPass>tWY9U52j</redisPass>
+        <redisBookExpiry>3600</redisBookExpiry>
+        <redisBook>3600</redisBook>
+	<redisTag>y_</redisTag>
+        <baiduInset><![CDATA[http://data.zz.baidu.com/urls?site=www.yixuanju.com&token=FJK7RhvfMrQrztkp]]></baiduInset>
+        <baiduUpdate><![CDATA[http://data.zz.baidu.com/update?site=www.yixuanju.com&token=FJK7RhvfMrQrztkp]]></baiduUpdate>
+        <baiduDelete><![CDATA[http://data.zz.baidu.com/del?site=www.yixuanju.com&token=FJK7RhvfMrQrztkp]]></baiduDelete>
+        <baiduPostLog>1</baiduPostLog>
+</main>

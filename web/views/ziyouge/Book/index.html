@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>{{.Book.Article.Articlename}}_{{.Book.Article.Author}}/著_紫幽阁</title>
+		<meta name="description" content="欢迎来紫幽阁阅读{{.Book.Article.Articlename}}，{{.Book.Article.Articlename}}为{{.Book.Article.Author}}最新力作，紫幽阁整理提供{{.Book.Article.Articlename}}在线阅读与下载，紫幽阁，界面简洁，更新及时，欢迎阅读。">
+		<meta name="keywords" content="{{.Book.Article.Articlename}}最新章节，{{.Book.Article.Articlename}}全文阅读，{{.Book.Article.Author}}最新作品，">
+		<meta http-equiv="Cache-Control" content="no-siteapp" />
+		<link rel="icon" type="image/png" href="/i/favicon.png">
+		<link rel="stylesheet" type="text/css" href="/css/amazeui.css" />
+		<link rel="stylesheet" type="text/css" href="/css/app.css" />
+		<script>
+		var _hmt = _hmt || [];
+		(function() {
+		  var hm = document.createElement("script");
+		  hm.src = "https://hm.baidu.com/hm.js?2b86ba7cebe69b290c2ba632f4239768";
+		  var s = document.getElementsByTagName("script")[0]; 
+		  s.parentNode.insertBefore(hm, s);
+		})();
+		</script>
+	</head>
+	<body>
+		<header class="am-topbar ">
+			<div class="am-box am-g am-box-p">
+				<div class="am-topbar-brand">
+					<a href="/">紫幽阁</a>
+				</div>
+				<button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-warning am-show-sm-only" data-am-collapse="{target: '#doc-topbar-collapse'}"><span class="am-sr-only">导航切换</span> <span class="am-icon-bars"></span></button>
+				<div class="am-collapse am-topbar-collapse" id="doc-topbar-collapse">
+					<ul class="am-nav am-nav-pills am-topbar-nav am-index-nav">
+						<li>
+							<a href="/full">全本小说</a>
+						</li>
+						<li>
+							<a href="/list">更新列表</a>
+						</li>
+
+					</ul>
+
+					<div class="am-topbar-right">
+						<button type="button" class="am-btn am-btn-default am-topbar-btn am-btn-sm" id="collectbutton">报错催更</button>
+						<a class="am-btn am-btn-warning am-btn-purple am-topbar-btn am-btn-sm" href="/bookcase" target="_blank">书架</a>
+					</div>
+				</div>
+			</div>
+		</header>
+
+		<div class="am-box am-g am-box-p">
+			<span class="am-u-lg-6 am-index-padding-bottom">
+					<a href="/"><img src="/i/main.png" width="120px" height="50px" alt="紫幽阁"/></a>
+				</span>
+
+			<div class="am-u-lg-6">
+				<div class="am-input-group">
+					<input type="text" class="am-form-field"  placeholder="请输入关键字进行搜索" id="searchAll">
+					<span class="am-input-group-btn">
+							<button class="am-btn am-btn-default" id="searchBtn" type="button"><span class="am-icon-search"></span> </button>
+					</span>
+				</div>
+			</div>
+		</div>
+		<nav class="am-box am-g am-box-p">
+			<ul class="am-nav am-nav-pills am-nav-justify am-nav-purple am-nav-hover am-index-nav-2">
+				{{range $k, $v := .Book.Webinfo.Class}} 
+				{{if $k}}
+				<li><a href="/list/{{$k}}">{{$v}}</a></li>
+				{{else}} {{end}}
+				{{end}}
+			</ul>
+			<ol class="am-breadcrumb am-breadcrumb-slash am-book-read">
+				<li><a href="/">首页</a></li>
+				<li><a href="/list/{{.Book.Article.Sortid}}">{{.Book.Article.Class}}</a></li>
+				<li class="am-active">{{.Book.Article.Articlename}}</li>
+			</ol>
+		</nav>
+		<main class="am-box am-g">
+			<article>
+				<div class="am-u-lg-9">
+				<div class="am-panel am-panel-default">
+					<div class="am-panel-hd am-text-center">
+						<h3 class="am-panel-title">{{.Book.Article.Articlename}}</h3>
+					</div>
+				    <div class="am-panel-bd">
+				    	<div class="am-book-img">
+				    		<img src="{{.Book.Article.ImgUrl}}" class="am-img-thumbnail am-radius" alt="{{.Book.Article.Articlename}}"/>
+				    	</div>
+				    	<div class="am-book-info">
+				    		<h2>{{.Book.Article.Articlename}}</h2>
+				    		<div>
+				    			<span>作者：</span><span>{{.Book.Article.Author}}</span>
+				    		</div>
+				    		<div>
+				    			<span>连载状态：</span><span>连载中</span>
+				    		</div>
+				    		<div>
+				    			<span>所属分类：</span><span><a href="/list/{{.Book.Article.Sortid}}">{{.Book.Article.Class}}</a></span>
+				    		</div>
+				    		<div>
+				    			<span>最新章节：</span><span><a href="/read/{{.Book.Article.Articleid}}/{{.Book.Article.Lastchapterid}}">{{.Book.Article.Lastchapter}}</a></span>
+				    		</div>
+				    		<div class="am-list-line-clamp">
+				    			<span>简介：</span>
+				    			<span class="am-book-info-intro">{{.Intro}}</span>
+				    		</div>
+
+				    	</div>
+
+				    </div>
+				    <div class="am-panel-footer">
+				    					    		<div  class="am-vertical-align-bottom">
+				    			<button type="button" class="am-btn am-btn-warning am-radius" id="addmark">加入书架</button>
+				    			<button type="button" class="am-btn am-btn-warning am-radius">推荐</button>
+				    		</div>
+				    </div>
+				</div>
+				</div>
+				<div class="am-u-lg-3">
+					<div class="am-index-padding-right">
+						<div class="am-panel am-panel-default">
+							<div class="am-panel-hd">
+								<h3 class="am-panel-title am-text-center">推荐书籍</h3>
+							</div>
+						
+							<ul class="am-list am-list-static am-list-rec">
+							{{range $k,$v:=.res6}}
+									<li><a class="am-text-truncate" href="/book/{{$v.Articleid}}">{{$v.Articlename}}</a></li>
+							{{end}}
+							</ul>
+							
+						</div>
+					</div>
+				</div>
+			</article>
+
+				<nav class="am-u-lg-12">
+					<div class="am-panel am-panel-default">
+						<div class="am-panel-hd">
+							<h3 class="am-panel-title am-text-center">最新章节</h3>
+						</div>
+					
+						<ul class="am-list am-list-static am-g am-book-list">
+						{{range $k,$v:=.Book.BackChapter}}
+							<li class="am-u-lg-4">
+						        	<a href="/read/{{$v.Articleid}}/{{$v.Chapterid}}" class="am-list-item-hd am-text-truncate">{{$v.Chaptername}}</a>
+						    </li>
+						{{end}}
+						</ul>
+					</div>
+				</nav>
+				<nav class="am-u-lg-12">
+					<div class="am-panel am-panel-default">
+						<div class="am-panel-hd">
+							<h3 class="am-panel-title am-text-center">章节目录</h3>
+						</div>
+					
+						<ul class="am-list am-list-static am-g am-book-list">
+						{{range $k,$v:=.Book.Chapter}}
+								<li class="am-u-lg-4"><a href="/read/{{$v.Articleid}}/{{$v.Chapterid}}">{{$v.Chaptername}}</a></li>
+						{{end}}
+						</ul>
+						<div class="am-panel-footer am-g-ad-footer-960_60">
+							
+						</div>
+					</div>
+				</nav>
+
+		</main>
+		<hr data-am-widget="divider" style="" class="am-divider am-divider-dotted"/>
+		<footer data-am-widget="footer" class="am-footer am-footer-default">
+			<div class="am-text-center">
+				<span class="am-footer-ysp">
+					<a id="godesktop" href="/">电脑版</a>
+				</span>
+				<span class="am-footer-divider"> | </span>
+				<span>
+					<a href="http://m.ziyouge.com">手机版</a>
+				</span>
+			</div>
+			<p class="am-text-center am-footer-p">
+				本站拒绝任何色情小说，一经发现，即作删除本站所收录作品、社区话题、书库评论属其个人行为，与本站立场无关
+			</p>
+			<div class="am-text-center"> 紫幽阁 BY 2017 </div>
+		</footer>
+		<script type="text/javascript">
+			var bookid = {{.Book.Article.Articleid}};
+			var chapterid = 0;
+			var addUrl = '/addmark';
+			var delUrl = '/delmark';
+			var moveUrl = '/movemark';
+			var bookCaseUrl = '/bookcase';
+		</script>
+		<script src="/js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/js/amazeui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/js/app.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/js/search.js" type="text/javascript" charset="utf-8"></script>
+		<script>
+		(function(){
+			var bp = document.createElement('script');
+			var curProtocol = window.location.protocol.split(':')[0];
+			if (curProtocol === 'https') {
+				bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+			}
+			else {
+				bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+			}
+			var s = document.getElementsByTagName("script")[0];
+			s.parentNode.insertBefore(bp, s);
+		})();
+		</script>
+		<script>(function(){
+		var src = (document.location.protocol == "http:") ? "http://js.passport.qihucdn.com/11.0.1.js?01c0b6cda733db46d417c5c5a07a9937":"https://jspassport.ssl.qhimg.com/11.0.1.js?01c0b6cda733db46d417c5c5a07a9937";
+		document.write('<script src="' + src + '" id="sozz"><\/script>');
+		})();
+		</script>
+	</body>
+</html>

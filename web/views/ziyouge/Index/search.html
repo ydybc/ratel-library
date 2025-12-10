@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>站内搜索_紫幽阁_整洁无弹免费阅读</title>
+		<meta name="keywords" content="紫幽阁,ziyouge" />
+		<meta name="Description" content="紫幽阁清爽干净页面整洁没有弹窗，收录了当今最火热的网络小说，为书友提供高质量的小说最新章节，是广大书友必备的绿色小说阅读网。" />
+		<meta http-equiv="Cache-Control" content="no-siteapp" />
+		<link rel="icon" type="image/png" href="/i/favicon.png">
+		<link rel="stylesheet" type="text/css" href="/css/amazeui.css" />
+		<link rel="stylesheet" type="text/css" href="/css/app.css" />
+		<script>
+		var _hmt = _hmt || [];
+		(function() {
+		  var hm = document.createElement("script");
+		  hm.src = "https://hm.baidu.com/hm.js?2b86ba7cebe69b290c2ba632f4239768";
+		  var s = document.getElementsByTagName("script")[0]; 
+		  s.parentNode.insertBefore(hm, s);
+		})();
+		</script>
+	</head>
+
+	<body>
+		<header class="am-topbar ">
+			<div class="am-box am-g am-box-p">
+				<h1 class="am-topbar-brand">
+					<a href="/">紫幽阁</a>
+				</h1>
+				<button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-warning am-show-sm-only" data-am-collapse="{target: '#doc-topbar-collapse'}"><span class="am-sr-only">导航切换</span> <span class="am-icon-bars"></span></button>
+				<div class="am-collapse am-topbar-collapse" id="doc-topbar-collapse">
+					<ul class="am-nav am-nav-pills am-topbar-nav am-index-nav">
+						<li>
+							<a href="/full">全本小说</a>
+						</li>
+						<li>
+							<a href="/list">更新列表</a>
+						</li>
+
+					</ul>
+
+					<div class="am-topbar-right">
+						<a class="am-btn am-btn-warning am-btn-purple am-topbar-btn am-btn-sm" href="/bookcase" target="_blank">书架</a>
+					</div>
+				</div>
+			</div>
+		</header>
+
+		<div class="am-box am-g am-box-p">
+			<span class="am-u-lg-6 am-index-padding-bottom">
+					<a href="/"><img src="/i/main.png" width="120px" height="50px" alt="紫幽阁"/></a>
+			</span>
+		</div>
+		<nav class="am-box am-g am-box-p">
+			<ul class="am-nav am-nav-pills am-nav-justify am-nav-purple am-nav-hover am-index-nav-2">
+				{{range $k, $v := .WebInfo.Class}} 
+				{{if $k}}
+				<li><a href="/list/{{$k}}">{{$v}}</a></li>
+				{{else}} {{end}}
+				{{end}}
+			</ul>
+			<ol class="am-breadcrumb am-breadcrumb-slash am-book-read">
+				<li><a href="/">首页</a></li>
+			  <li class="am-active">站内搜索</li>
+			</ol>
+		</nav>
+
+
+		<main class="am-box am-g">
+
+			<div class="am-u-lg-9">
+				<div class="am-panel am-panel-default">
+	    		<div class="am-panel-bd"><h3 class="am-search-h3">站内搜索</h3></div>
+				</div>
+				<div class="am-input-group">
+					<input type="text" class="am-form-field" placeholder="请输入关键字进行搜索" value="" id="searchText">
+					<span class="am-input-group-btn">
+							<button class="am-btn am-btn-default" type="button" id="startSearch"><span class="am-icon-search"></span> </button>
+					</span>
+				</div>
+				<ul class="am-list am-list-static am-list-border" id="searchHtml">
+				  <li>搜索结果展示区</li>
+				</ul>
+				<ul class="am-pagination am-pagination-right am-list-page" id="searchPage">
+
+				</ul>
+			</div>
+		<div class="am-u-lg-3">
+		<nav class="am-panel am-panel-default">
+						<div class="am-panel-hd">
+							<h3 class="am-panel-title am-text-center">强烈推荐</h3>
+						</div>
+			<ul class="am-list">
+				{{range $k,$v:=.res10}}
+					<li><a class="am-text-truncate" href="/book/{{$v.Articleid}}">{{$v.Articlename}}</a></li>
+				{{end}}
+			</ul>
+		</nav>
+		</div>
+
+		</main>
+
+		<hr data-am-widget="divider" style="" class="am-divider am-divider-dotted"/>
+		<footer data-am-widget="footer" class="am-footer am-footer-default">
+			<div class="am-text-center">
+				<span class="am-footer-ysp">
+					<a id="godesktop" href="/">电脑版</a>
+				</span>
+				<span class="am-footer-divider"> | </span>
+				<span>
+					<a href="http://m.ziyouge.com">手机版</a>
+				</span>
+			</div>
+			<p class="am-text-center am-footer-p">
+				本站拒绝任何色情小说，一经发现，即作删除本站所收录作品、社区话题、书库评论属其个人行为，与本站立场无关
+			</p>
+			<div class="am-text-center"> 紫幽阁 BY 2017 </div>
+		</footer>
+
+		<script src="/js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/js/amazeui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script	src="/js/so.js"	type="text/javascript"	charset="utf-8"></script>
+	</body>
+
+</html>

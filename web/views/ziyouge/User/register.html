@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>用户注册_紫幽阁1111</title>
+		<meta name="keywords" content="用户注册,紫幽阁" />
+		<meta name="Description" content="请填写信息进行紫幽阁用户注册！紫幽阁用户注册,注册后可下载本站书籍，还可享用超大书架" />
+		<meta name="keywords" content="紫幽阁，用户注册">
+		<meta http-equiv="Cache-Control" content="no-siteapp" />
+		<link rel="icon" type="image/png" href="/i/favicon.png">
+		<link rel="stylesheet" type="text/css" href="/css/amazeui.css" />
+		<link rel="stylesheet" type="text/css" href="/css/app.css" />
+		<script>
+		var _hmt = _hmt || [];
+		(function() {
+		  var hm = document.createElement("script");
+		  hm.src = "https://hm.baidu.com/hm.js?2b86ba7cebe69b290c2ba632f4239768";
+		  var s = document.getElementsByTagName("script")[0]; 
+		  s.parentNode.insertBefore(hm, s);
+		})();
+		</script>
+	</head>
+
+	<body>
+		<header class="am-topbar ">
+			<div class="am-box am-g am-box-p">
+				<h1 class="am-topbar-brand">
+					<a href="/">紫幽阁</a>
+				</h1>
+				<button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-warning am-show-sm-only" data-am-collapse="{target: '#doc-topbar-collapse'}"><span class="am-sr-only">导航切换</span> <span class="am-icon-bars"></span></button>
+				<div class="am-collapse am-topbar-collapse" id="doc-topbar-collapse">
+					<ul class="am-nav am-nav-pills am-topbar-nav am-index-nav">
+						<li>
+							<a href="/full">全本小说</a>
+						</li>
+						<li>
+							<a href="/list">更新列表</a>
+						</li>
+
+					</ul>
+
+					<div class="am-topbar-right">
+						<a class="am-btn am-btn-warning am-btn-purple am-topbar-btn am-btn-sm" href="/bookcase" target="_blank">书架</a>
+					</div>
+				</div>
+			</div>
+		</header>
+
+		<div class="am-box am-g am-box-p">
+			<span class="am-u-lg-6 am-index-padding-bottom">
+					<a href="/"><img src="/i/main.png" width="120px" height="50px" alt="紫幽阁"/></a>
+				</span>
+
+			<div class="am-u-lg-6">
+				<div class="am-input-group">
+					<input type="text" class="am-form-field"  placeholder="请输入关键字进行搜索" id="searchAll">
+					<span class="am-input-group-btn">
+							<button class="am-btn am-btn-default" id="searchBtn" type="button"><span class="am-icon-search"></span> </button>
+					</span>
+				</div>
+			</div>
+		</div>
+		<nav class="am-box am-g am-box-p">
+			<ul class="am-nav am-nav-pills am-nav-justify am-nav-purple am-nav-hover am-index-nav-2">
+				{{range $k, $v := .WebInfo.Class}} 
+				{{if $k}}
+				<li><a href="/list/{{$k}}">{{$v}}</a></li>
+				{{else}} {{end}}
+				{{end}}
+			</ul>
+			<ol class="am-breadcrumb am-breadcrumb-slash am-book-read">
+			  <li><a href="/">首页</a></li>
+			  <li class="am-active">用户登陆</li>
+			</ol>
+		</nav>
+<main  class="am-box am-g am-box-p">
+
+
+<section class="" data-tag="css-block-grid">
+<div class="am-header-conter">
+<form action="/register" class="am-form" id="doc-vld-msg" method="post">
+  <fieldset>
+    <legend class="am-user-header">请仔细填写注册资料</legend>
+    <div id="user_show"></div>
+	<div class="am-form-group">
+      <label for="zy-name">用户名：</label>
+      <input type="text" id="zy-name" name="username" minlength="3" maxlength="14" data-validation-message="昵称为 3-14 个字符组成" placeholder="3-14 个字符组成的昵称" required/>
+    </div>
+    <div class="am-form-group">
+      <label for="zy-email">邮箱：</label>
+      <input type="email" id="zy-email" name="email" data-validation-message="请输入正确的邮箱地址" placeholder="输入邮箱" required/>
+    </div>
+    <div class="am-form-group">
+      <label for="zy-pwd-1">密码：</label>
+      <input type="password" id="zy-pwd-1" name="password" data-validation-message="密码为 6-16 位字母,数字,下划线组成" placeholder="6-16 位字母和数字组成的密码" pattern="^[A-Za-z.0-9]{6,16}$" required/>
+    </div>
+    <div class="am-form-group">
+      <label for="zy-pwd-2">确认密码：</label>
+      <input type="password" id="zy-pwd-2" name="repassword" data-validation-message="两次密码填写不一致" placeholder="请与上面输入的密码一致" data-equal-to="#zy-pwd-1" required/>
+    </div>
+    <div class="am-form-group">
+      <label>性别： </label>
+      <label class="am-radio-inline">
+        <input type="radio" name="sex" value="1"> 男
+      </label>
+      <label class="am-radio-inline">
+        <input type="radio" name="sex" value="2"> 女
+      </label>
+      <label class="am-radio-inline">
+        <input type="radio" name="sex" value="0" checked> 其他
+      </label>
+    </div>
+	<input type="hidden" name="vid" value="{{.Captcha.CaptchaId}}">
+    <div class="am-form-group login-verify">
+      <label for="zy-verify">验证码：</label>
+      <div class="am-s-sm-12">
+      <img class="am-thumbnail verify-imgl vchange" src="/captcha/{{.Captcha.CaptchaId}}.png">
+      <span class="verify-imgr">点击图片刷新验证码</span>
+      </div>
+      <input class="am-s-sm-12" type="text" id="zy-verify" name="code" data-validation-message="请填写图片上字符,点击图片刷新验证码" placeholder="输入验证码" required/>
+    </div>
+    <button class="am-btn am-btn-warning" type="submit" id="pgo">注册</button>
+    <a class="am-btn am-btn-default" href="/login">已有账号登陆</a>
+  </fieldset>
+</form>
+</div>
+</section>
+
+	</main>
+
+<!-- List -->
+
+		<hr data-am-widget="divider" style="" class="am-divider am-divider-dotted"/>
+		<footer data-am-widget="footer" class="am-footer am-footer-default">
+			<div class="am-text-center">
+				<span class="am-footer-ysp">
+					<a id="godesktop" href="/">电脑版</a>
+				</span>
+				<span class="am-footer-divider"> | </span>
+				<span>
+					<a href="http://m.ziyouge.com">手机版</a>
+				</span>
+			</div>
+			<p class="am-text-center am-footer-p">
+				本站拒绝任何色情小说，一经发现，即作删除本站所收录作品、社区话题、书库评论属其个人行为，与本站立场无关
+			</p>
+			<div class="am-text-center"> 紫幽阁 BY 2017 </div>
+		</footer>
+		<script src="/js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/js/amazeui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/js/jquery.form.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/js/user.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/js/app.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/js/search.js" type="text/javascript" charset="utf-8"></script>
+</body>
+</html>

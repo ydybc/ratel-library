@@ -1,0 +1,16 @@
+package repositories
+
+//package repositories
+
+import (
+	//	"zyg/datasource"
+	"testing"
+)
+
+func TestGetChapter(t *testing.T) {
+
+	if _, err := GetChapterContent("6,ce3322303a"); err != nil {
+		t.Fatal(err)
+	}
+
+}

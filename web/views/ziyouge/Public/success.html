@@ -1,0 +1,114 @@
+<!doctype html>
+<html class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>跳转提示_紫幽阁</title>
+  <meta name="description" content="<?php echo($message); ?>.紫幽阁">
+  <meta name="keywords" content="<?php echo($message); ?>,紫幽阁">
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+	<link rel="stylesheet" type="text/css" href="/css/amazeui.css" />
+	<link rel="stylesheet" type="text/css" href="/css/app.css" />
+</head>
+<body>
+		<header class="am-topbar ">
+			<div class="am-container">
+				<h1 class="am-topbar-brand">
+					<a href="/">紫幽阁</a>
+				</h1>
+				<button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-warning am-show-sm-only" data-am-collapse="{target: '#doc-topbar-collapse'}"><span class="am-sr-only">导航切换</span> <span class="am-icon-bars"></span></button>
+				<div class="am-collapse am-topbar-collapse" id="doc-topbar-collapse">
+					<ul class="am-nav am-nav-pills am-topbar-nav am-index-nav">
+						<li>
+							<a href="{:U(C('N_URL.FULL_LIST'))}">全本小说</a>
+						</li>
+						<li>
+							<a href="{:U(C('N_URL.UPDATE_LIST'))}">更新列表</a>
+						</li>
+
+					</ul>
+
+					<div class="am-topbar-right">
+						<a class="am-btn am-btn-warning am-btn-purple am-topbar-btn am-btn-sm" href="{:U('/bookcase')}" target="_blank">书架</a>
+					</div>
+				</div>
+			</div>
+		</header>
+
+		<div class="am-container">
+			<span class="am-u-lg-6 am-index-padding-bottom">
+					<a href="/"><img src="{:U('/'.'i/main.png')}" width="120px" height="50px" alt="紫幽阁"/></a>
+				</span>
+
+			<div class="am-u-lg-6">
+				<div class="am-input-group">
+					<input type="text" class="am-form-field">
+					<span class="am-input-group-btn">
+							<button class="am-btn am-btn-default" type="button"><span class="am-icon-search"></span> </button>
+					</span>
+				</div>
+			</div>
+		</div>
+		<nav class="am-container">
+			<ul class="am-nav am-nav-pills am-nav-justify am-nav-purple am-nav-hover am-index-nav-2">
+				<for start="1" end="11">
+					<li>
+						<a href="{:U('/list/'.$i)}">{:C('N_CLASS.N'.$i)}</a>
+					</li>
+				</for>
+			</ul>
+		</nav>
+		<nav class="am-container">
+			<ol class="am-breadcrumb am-breadcrumb-slash am-book-read">
+					<li><a href="/">首页</a></li>
+			</ol>
+		</nav>
+		<div class="am-container">
+			<div class="am-g am-seccess-head">
+			   <p>
+			   	<h2 class="am-article-title am-text-center"><?php echo($message); ?></h2>
+			   </p>
+			   <hr data-am-widget="divider" style="" class="am-divider am-divider-dotted"/>
+			  <div class="am-alert am-alert-warning am-seccess-alert  am-text-center">
+			  	页面自动 <a id="href" href="<?php echo($jumpUrl); ?>">跳转</a> 倒计时： <b id="wait"><?php echo($waitSecond); ?></b>
+				</div>
+				</div>
+			</div>
+
+    
+
+
+		<hr data-am-widget="divider" style="" class="am-divider am-divider-dotted"/>
+		<footer data-am-widget="footer" class="am-footer am-footer-default">
+			<div class="am-text-center">
+				<span class="am-footer-ysp">
+					<a id="godesktop" href="/">电脑版</a>
+				</span>
+				<span class="am-footer-divider"> | </span>
+				<span>
+					<a href="http://m.ziyouge.com">手机版</a>
+				</span>
+			</div>
+			<p class="am-text-center am-footer-p">
+				本站拒绝任何色情小说，一经发现，即作删除本站所收录作品、社区话题、书库评论属其个人行为，与本站立场无关
+			</p>
+			<div class="am-text-center"> 紫幽阁 BY 2017 </div>
+		</footer>
+		<script src="/js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/js/amazeui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			(function() {
+				var wait = document.getElementById('wait'),
+					href = document.getElementById('href').href;
+				var interval = setInterval(function() {
+					var time = --wait.innerHTML;
+					if(time <= 0) {
+						location.href = href;
+						clearInterval(interval);
+					};
+				}, 1000);
+			})();
+		</script>
+</body>
+</html>

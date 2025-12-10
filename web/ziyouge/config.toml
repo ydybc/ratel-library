@@ -1,0 +1,30 @@
+#配置 zyg
+name = "紫幽阁本地"
+url = "http://www.ziyouge.com"
+urlm = "http://m.ziyouge.com"
+class = ["全部","玄幻奇幻","武侠仙侠","都市言情","古代言情","军事历史","网游竞技","灵异恐怖","耽美同人","穿越架空","其他书籍"]
+addr = "ziyouge.com:8080"
+markMax = 200
+rec = [16763,15928,16894,16787,16908,16637,16645,16465,16667,16917,16829,10115,16845,16499,16777,12772,10522,14518,16606,16656]
+onSon = "m"
+imgUrl = "http://img.ziyouge.com"
+[mysql]
+	addr = "zyroot:45mcGwETpwt3Dgf9@tcp(192.168.44.143:3306)/zydata?charset=utf8"
+[redis]
+	addr = "127.0.0.1:6379"
+	pass = ""
+	sessDb =4
+	sessExpiry = "24h"
+	bookDb = 1
+	bookExpiry = "1h"
+	tag = "z_"
+[weed]
+	master = "192.168.44.142:9444"
+	filer = ["192.168.44.142:9888"]
+	timeout = "5m"
+[dir]
+	main = "static/"
+	mainm = "staticm/"
+	template = "views"
+	log = ""
+	logm = ""

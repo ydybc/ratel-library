@@ -1,0 +1,175 @@
+/* Write your styles */
+.am-menu-toggle-title{
+	font-size:14px;
+}
+.am-intro-default .am-intro-hd{
+	background-color: #0EADD2;
+}
+.line-clamp {
+  overflow : hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 5; /* 这里修改为要显示的行数*/
+  -webkit-box-orient: vertical;
+}
+.am-titlebar h3 {
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 1.6rem;
+}
+.am-btn-size-read{
+	padding-left: 2em;
+}
+.am-btn-size-right{
+	padding-right: 2em;
+}
+.am-header li{
+	line-height: normal;
+}
+.am-intro-bd h3{
+	margin: auto;
+}
+.am-mark-db h3{
+	margin: auto;
+}
+/* .am-pagination>li>a{
+	background-color: #0e90d2;
+} */
+.am-pagination-select>li>a{
+	background-color: #0e90d2;
+	color: #fff; 
+}
+.am-pagination .am-pagination-next a, .am-pagination .am-pagination-prev a{
+	border-radius: 2px;
+}
+#shadow {
+	background:#000;
+	position:absolute;
+	left:0;
+	top:0;
+	width:100%;
+	height:100%;
+	z-index:100;
+	opacity:0.80;
+	filter: alpha(opacity = 80);
+	zoom:1;
+}
+.am-read-def{
+	background-color: #FFF;
+	background-image: none;
+}
+.am-read-def article{
+	color:#000;
+}
+.am-read-def footer{
+	background-color: #FFF;
+	background-image: none;
+}
+.am-read-eye{
+	background-color: #C7EDCC;
+	background-image: none;
+}
+.am-read-eye article{
+	color:#19591A;
+}
+.am-read-eye footer{
+	background-color: #C7EDCC;
+	background-image: none;
+}
+.am-read-eye2{
+	background-image: url(/i/17.JPG);
+}
+.am-read-eye2 article{
+	color:#000;
+}
+.am-read-eye2 footer{
+	background-image: url(/i/17.JPG);
+}
+.am-read-off{
+	background-color: #1B1B1B;
+	background-image: none;
+}
+.am-read-off article{
+	color:#545050;
+}
+.am-read-off footer{
+	background-color: #1B1B1B;
+	background-image: none;
+}
+.am-read-off2{
+	background-image: url(/i/heibu.JPG);
+}
+.am-read-off2 article{
+	color:#949494;
+}
+.am-read-off2 footer{
+	background-image: url(/i/heibu.JPG);
+}
+.am-read-zyg{
+	background-color: #9992A5;
+	background-image: none;
+}
+.am-read-zyg article{
+	color:#949494;
+}
+.am-read-zyg footer{
+	background-color: #9992A5;
+	background-image: none;
+}
+.am-pagination-select .am-pagination-select select{
+	width: auto;
+}
+.am-pagination-select .am-pagination-select{
+	margin-left: -2.5em;
+}
+.am-read-cl{
+/* 	padding: .7em .5em;
+	margin-bottom: 2rem; */
+	padding: 0;
+	list-style: none;
+	background-color: transparent;
+	border-radius: 0;
+	font-size: 85%;
+}
+.am-read-h-div{
+	padding: 2em 2em 0;
+	margin:0;
+}
+.am-read-h-p{
+	margin:0;
+	text-align: center;
+	font-weight:800;
+}
+.am-read-article{
+	margin:0.7em 10px;
+}
+.am-novel-page-li{
+	position: absolute;
+	top: 0;
+	left: 50%;
+	margin-left: -35px;
+	width: 70px;
+	height: 36px;
+	text-align: center;
+	border-radius: 0;
+}
+.am-seccess-head{
+	padding: 10px;
+	text-align: center;
+}
+.am-seccess-title{
+	font-size: 2.8rem;
+	line-height: 1.15;
+	font-weight: 400;
+	padding: 15px;
+	text-align: center;
+}
+.am-seccess-alert{
+	text-align: center;
+}
+.verify{
+	margin-bottom: 0; 
+}
+.am-btn-bottom-p{
+	padding-bottom: 15px;
+}

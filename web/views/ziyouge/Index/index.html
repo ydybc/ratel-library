@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>紫幽阁_整洁无弹免费阅读</title>
+		<meta name="keywords" content="紫幽阁,ziyouge" />
+		<meta name="Description" content="紫幽阁清爽干净页面整洁没有弹窗，收录了当今最火热的网络小说，为书友提供高质量的小说最新章节，是广大书友必备的绿色小说阅读网。" />
+		<meta http-equiv="Cache-Control" content="no-siteapp" />
+		<link rel="icon" type="image/png" href="/i/favicon.png">
+		<link rel="stylesheet" type="text/css" href="/css/amazeui.css" />
+		<link rel="stylesheet" type="text/css" href="/css/app.css" />
+		<script>
+		var _hmt = _hmt || [];
+		(function() {
+		  var hm = document.createElement("script");
+		  hm.src = "https://hm.baidu.com/hm.js?2b86ba7cebe69b290c2ba632f4239768";
+		  var s = document.getElementsByTagName("script")[0]; 
+		  s.parentNode.insertBefore(hm, s);
+		})();
+		</script>
+	</head>
+	<body>
+		<header class="am-topbar ">
+			<div class="am-box am-g am-box-p">
+				<h1 class="am-topbar-brand">
+					<a href="/">紫幽阁</a>
+				</h1>
+				<button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-warning am-show-sm-only" data-am-collapse="{target: '#doc-topbar-collapse'}"><span class="am-sr-only">导航切换</span> <span class="am-icon-bars"></span></button>
+				<div class="am-collapse am-topbar-collapse" id="doc-topbar-collapse">
+					<ul class="am-nav am-nav-pills am-topbar-nav am-index-nav">
+						<li>
+							<a href="/full">全本小说</a>
+						</li>
+						<li>
+							<a href="/list">更新列表</a>
+						</li>
+
+					</ul>
+
+					<div class="am-topbar-right">
+						<a class="am-btn am-btn-warning am-btn-purple am-topbar-btn am-btn-sm" href="/bookcase" target="_blank">书架</a>
+					</div>
+				</div>
+			</div>
+		</header>
+
+		<div class="am-box am-g am-box-p">
+			<span class="am-u-lg-6 am-index-padding-bottom">
+					<a href="/"><img src="/i/main.png" width="120px" height="50px" alt="紫幽阁"/></a>
+				</span>
+
+			<div class="am-u-lg-6">
+				<div class="am-input-group">
+					<input type="text" class="am-form-field"  placeholder="请输入关键字进行搜索" id="searchAll">
+					<span class="am-input-group-btn">
+							<button class="am-btn am-btn-default" id="searchBtn" type="button"><span class="am-icon-search"></span> </button>
+					</span>
+				</div>
+			</div>
+		</div>
+		<nav class="am-box am-g am-box-p">
+			<ul class="am-nav am-nav-pills am-nav-justify am-nav-purple am-nav-hover am-index-nav-2">
+				{{range $k, $v := .WebInfo.Class}} 
+				{{if $k}}
+				<li><a href="/list/{{$k}}">{{$v}}</a></li>
+				{{else}} {{end}}
+				{{end}}
+			</ul>
+			<ol class="am-breadcrumb am-breadcrumb-slash am-book-read">
+					<li class="am-active am-icon-home"></li>
+			</ol>
+		</nav>
+
+
+		<main class="am-box am-g">
+
+			<article class="am-u-lg-9">
+				<div class="am-index-padding-left">
+					<div class="am-panel am-panel-default">
+
+						<div class="am-panel-bd am-panel-imgh3">
+
+							<ul data-am-widget="gallery" class="am-gallery am-avg-sm-2
+						  am-avg-md-4 am-avg-lg-4 am-gallery-overlay" data-am-gallery="{ pureview: false }">
+								{{range $k, $v := .res8img}}
+									<li>
+										<div class="am-gallery-item">
+											<a href="/book/{{$v.Articleid}}">
+												<img src="{{$v.ImgUrl}}" alt="{{$v.Articlename}}"/>
+												<h3 class="am-gallery-title">{{$v.Articlename}}</h3>
+<!--												<div class="am-gallery-desc">2375-09-26</div>-->
+											</a>
+										</div>
+									</li>
+								{{end}}
+
+							</ul>
+						</div>
+					</div>
+				</div>
+			</article>
+			<article class="am-u-lg-3">
+					<div class="am-panel am-panel-default">
+						<div class="am-panel-hd am-a-color-purple am-text-center">信息栏</div>
+						<div class="am-panel-bd">
+							本站推荐使用除IE以外的主流浏览器在极速模式下进行浏览!
+						</div>
+					</div>
+					<div class="am-panel am-panel-default  am-index-padding-rm ">
+						<div class="am-panel-hd am-text-center">站内推荐</div>
+						<ul class="am-list am-text-truncate">
+						  {{range $k, $v := .res5}}
+						  <li><a href="/book/{{$v.Articleid}}">{{$v.Articlename}}</a></li>
+						  {{end}}
+						</ul>
+					</div>
+			</article>
+				<nav class="am-u-lg-12">
+					<div class="am-panel am-panel-default am-panel-bd">
+						<ul data-am-widget="gallery" class="am-gallery am-avg-sm-3 am-avg-md-3 am-avg-lg-9 am-gallery-bordered" data-am-gallery="{  }">
+						{{range $k, $v := .res9img}}
+							<li>
+								<div class="am-gallery-item">
+									<a href="/book/{{$v.Articleid}}" class="">
+										<img src="{{.ImgUrl}}" alt="{{$v.Articlename}}" />
+										<h3 class="am-gallery-title">{{$v.Articlename}}</h3>
+									</a>
+								</div>
+							</li>
+						{{end}}
+						</ul>
+
+					</div>
+				</nav>
+				<div class="am-u-lg-4">
+					<nav class="am-panel am-panel-default">
+						<div class="am-panel-hd">
+							<h3 class="am-panel-title am-text-center">推荐榜</h3>
+						</div>
+
+						<ul class="am-list">
+							{{range $k, $v := .res16}}
+								<li><a class="am-text-truncate" href="/book/{{$v.Articleid}}">{{$v.Articlename}}</a></li>
+							{{end}}
+						</ul>
+					</nav>
+				</div>
+
+				<div class="am-u-lg-8">
+					<nav class="am-panel am-panel-default">
+						<div class="am-panel-hd">
+							<h3 class="am-panel-title am-text-center">更新列表</h3>
+						</div>
+						<ul class="am-list am-g am-update-list am-list-static">
+							<li class="am-u-lg-3">书名</li>
+							<li class="am-u-lg-6">最新章节</li>
+							<li class="am-u-lg-3">作者</li>
+						</ul>
+						{{range $k, $v := .res15}}
+							<ul class="am-list am-g am-update-list am-text-truncate">
+								<li class="am-u-lg-3">
+									<a href="/book/{{$v.Articleid}}">{{$v.Articlename}}</a>
+								</li>
+								<li class="am-u-lg-6">
+									<a href="/read/{{$v.Articleid}}/{{$v.Lastchapterid}}">{{$v.Lastchapter}}</a>
+									<!--<a href="/book/{{$v.Articleid}}">{{$v.Articlename}}</a>-->
+								</li>
+								<li class="am-u-lg-3">
+									<a href="/search/{{$v.Author}}">{{$v.Author}}</a>
+								</li>
+							</ul>
+						{{end}}
+						<div class="am-panel-footer"></div>
+					</nav>
+				</div>
+
+			
+
+		</main>
+
+		<hr data-am-widget="divider" style="" class="am-divider am-divider-dotted"/>
+		<footer data-am-widget="footer" class="am-footer am-footer-default">
+			<div class="am-text-center">
+				<span class="am-footer-ysp">
+					<a id="godesktop" href="/">电脑版</a>
+				</span>
+				<span class="am-footer-divider"> | </span>
+				<span>
+					<a href="http://m.ziyouge.com">手机版</a>
+				</span>
+			</div>
+			<p class="am-text-center am-footer-p">
+				本站拒绝任何色情小说，一经发现，即作删除本站所收录作品、社区话题、书库评论属其个人行为，与本站立场无关
+			</p>
+			<div class="am-text-center"> 紫幽阁 BY 2017 </div>
+		</footer>
+
+		<script src="/js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/js/amazeui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/js/search.js" type="text/javascript" charset="utf-8"></script>
+		<script>
+		(function(){
+			var bp = document.createElement('script');
+			var curProtocol = window.location.protocol.split(':')[0];
+			if (curProtocol === 'https') {
+				bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+			}
+			else {
+				bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+			}
+			var s = document.getElementsByTagName("script")[0];
+			s.parentNode.insertBefore(bp, s);
+		})();
+		</script>
+		<script>(function(){
+		var src = (document.location.protocol == "http:") ? "http://js.passport.qihucdn.com/11.0.1.js?0fec43a8535417403ac67d5132f4c123":"https://jspassport.ssl.qhimg.com/11.0.1.js?0fec43a8535417403ac67d5132f4c123";
+		document.write('<script src="' + src + '" id="sozz"><\/script>');
+		})();
+		</script>
+	</body>
+
+</html>

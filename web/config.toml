@@ -1,0 +1,38 @@
+#测试配置 本地
+name = "紫幽阁本地"
+url = "http://www.zyg.com:8080"
+urlm = "http://m.zyg.com:8080"
+class = ["全部","玄幻奇幻","武侠仙侠","都市言情","古代言情","军事历史","网游竞技","灵异恐怖","耽美同人","穿越架空","其他书籍"]
+addr = "zyg.com:8080"
+markMax = 200
+rec = [228,227,226,225,224,223,222,221,220,219,218,217,216,215,214,213,212,211,210,209,208,207,206,205,204]
+onSon = "m"
+imgUrl = "http://img.zyg.com:8080"
+mainport = ":8801"
+sonport = ":8802"
+imgport = ":8803"
+[mysql]
+	addr = "root:@tcp(127.0.0.1:3306)/jieqi?charset=utf8"
+[redis]
+	addr = "192.168.1.111:6379"
+	pass = ""
+	sessDb =4
+	sessExpiry = "24h"
+	bookDb = 1
+	bookExpiry = "1h"
+	tag = "z_"
+[weed]
+	master = "192.168.1.113:9333"
+	filer = ["192.168.1.113:9888"]
+	volume = ["",""]
+	timeout = "5m"
+[elasticSearch]
+	host = "http://127.0.0.1:9200/"
+	index = "zyg"
+[dir]
+	main = "static/"
+	mainm = "staticm/"
+	template = "views"
+	img = "img"
+	log = ""
+	logm = ""

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>{{.SortName}}_{{index .listlable .Full}}小说列表_紫幽阁</title>
+		<meta name="keywords" content="{{.SortName}}{{index .listlable .Full}}小说列表,{{.SortName}}{{index .listlable .Full}}书籍排行,{{index .listlable .Full}}更新小说列表,免费阅读,电子书下载" />
+		<meta name="Description" content="紫幽阁全文字{{.SortName}}小说阅读目录,本网站界面简洁,为您提供优质的{{.SortName}}{{index .listlable .Full}}小说阅读与电子书下载。本列表为{{.SortName}}类小说索引列表。" />
+		<meta http-equiv="Cache-Control" content="no-siteapp" />
+		<link rel="icon" type="image/png" href="/i/favicon.png">
+		<link rel="stylesheet" type="text/css" href="/css/amazeui.css" />
+		<link rel="stylesheet" type="text/css" href="/css/app.css" />
+		<script>
+		var _hmt = _hmt || [];
+		(function() {
+		  var hm = document.createElement("script");
+		  hm.src = "https://hm.baidu.com/hm.js?2b86ba7cebe69b290c2ba632f4239768";
+		  var s = document.getElementsByTagName("script")[0]; 
+		  s.parentNode.insertBefore(hm, s);
+		})();
+		</script>
+	</head>
+
+	<body>
+		<header class="am-topbar ">
+			<div class="am-box am-g am-box-p">
+				<h1 class="am-topbar-brand">
+					<a href="/">紫幽阁</a>
+				</h1>
+				<button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-warning am-show-sm-only" data-am-collapse="{target: '#doc-topbar-collapse'}"><span class="am-sr-only">导航切换</span> <span class="am-icon-bars"></span></button>
+				<div class="am-collapse am-topbar-collapse" id="doc-topbar-collapse">
+					<ul class="am-nav am-nav-pills am-topbar-nav am-index-nav">
+						
+						{{if .Full}}
+						<li class="am-active"><a href="/full">全本小说</a></li>
+						<li><a href="/list">更新列表</a></li>
+						{{else}}
+						<li><a href="/full">全本小说</a></li>
+						<li class="am-active"><a href="/list">更新列表</a></li>
+						{{end}}
+
+
+					</ul>
+
+					<div class="am-topbar-right">
+						<a class="am-btn am-btn-warning am-btn-purple am-topbar-btn am-btn-sm" href="/bookcase" target="_blank">书架</a>
+					</div>
+				</div>
+			</div>
+		</header>
+
+		<div class="am-box am-g am-box-p">
+			<span class="am-u-lg-6 am-index-padding-bottom">
+					<a href="/"><img src="/i/main.png" width="120px" height="50px" alt="紫幽阁"/></a>
+				</span>
+
+			<div class="am-u-lg-6">
+				<div class="am-input-group">
+					<input type="text" class="am-form-field"  placeholder="请输入关键字进行搜索" id="searchAll">
+					<span class="am-input-group-btn">
+							<button class="am-btn am-btn-default" id="searchBtn" type="button"><span class="am-icon-search"></span> </button>
+					</span>
+				</div>
+			</div>
+		</div>
+		<nav class="am-box am-g am-box-p">
+			<ul class="am-nav am-nav-pills am-nav-justify am-nav-purple am-nav-hover am-index-nav-2">
+				{{range $k, $v := .WebInfo.Class}} 
+				{{if $k}}
+				<li><a href="/{{index $.listdir $.Full}}/{{$k}}">{{$v}}</a></li>
+				{{else}} {{end}}
+				{{end}}
+			</ul>
+			<ol class="am-breadcrumb am-breadcrumb-slash am-book-read">
+			  <li><a href="/">首页</a></li>
+			  <li class="am-active">{{.SortName}}</li>
+			</ol>
+		</nav>
+		<main class="am-box am-g">
+			<nav class="am-u-lg-9">
+					<div class="am-panel am-panel-default">
+						<div class="am-panel-hd am-panel-title am-text-center">更新列表</div>							
+							<ul class="am-list am-list-static am-list-border">
+							  	{{range $k, $v := .ArticleList}} 
+							  <li>
+							  	<article class="am-g">
+							  		<div class="am-u-sm-2">
+							  			<a href="/book/{{$v.Articleid}}"><img src="{{$v.ImgUrl}}" alt="{{$v.Articlename}}" class="am-img-thumbnail am-radius am-list-img am-list-img">	</a>
+							  		</div>
+							  		<div class="am-list-info am-u-sm-10">
+								  		<div class="am-list-info-right">
+									  		<a href="/book/{{$v.Articleid}}">
+									  			<h3 class="am-list-title am-text-truncate">{{$v.Articlename}}</h3>
+									  		</a>
+									  		<span class="am-list-update am-text-truncate">
+												{{if $v.Fullflag}}完结{{else}}连载中{{end}}
+									  		</span>
+									  		<span class="am-list-author am-text-truncate">
+									  			<p>作者:&nbsp; </p><strong>{{$v.Author}}</strong>
+									  		</span>
+									  		
+									  		<div class="am-list-info-p am-list-line-clamp">
+									  			{{$v.Intro}}
+									  		</div>
+
+								  		</div>
+									  		<div class="am-list-info-last am-text-xs">
+									  			<p>最新章节:&nbsp; </p><strong><a href="/read/{{$v.Articleid}}/{{$v.Lastchapterid}}">{{$v.Lastchapter}}</a></strong>
+									  		</div>
+							  		</div>
+							  		</article>
+							  </li>
+								{{end}}
+							</ul>
+
+						<div class="am-panel-footer">
+							<ul class="am-pagination am-pagination-right am-list-page">
+
+							
+							{{range $k, $v := .Pages.Pages}}
+							{{if eq $.Pages.CurrPage  $v }}
+							<li class="am-active"><a href="/{{index $.listdir $.Full}}/{{$.Pages.Class}}/{{$v}}">{{$v}}</a></li>
+							{{else}}
+							<li><a href="/{{index $.listdir $.Full}}/{{$.Pages.Class}}/{{$v}}">{{$v}}</a></li>
+							{{end}}
+							{{end}}
+							</ul>
+						</div>
+						</div>
+					</nav>
+				<div class="am-u-lg-3">
+					<div class="am-panel am-panel-default">
+						<div class="am-panel-hd">
+							<h3 class="am-panel-title am-text-center">推荐</h3>
+						</div>
+						<ul class="am-list am-text-xs">
+							{{range $k, $v := .res8img}}
+							<li><a class="am-text-truncate" href="/book/{{$v.Articleid}}">{{$v.Articlename}}</a></li>
+							{{end}}
+						</ul>
+						<div class="am-panel-footer"></div>
+					</div>
+				</div>
+
+
+		</main>
+		
+		<hr data-am-widget="divider" style="" class="am-divider am-divider-dotted"/>
+		<footer data-am-widget="footer" class="am-footer am-footer-default">
+			<div class="am-text-center">
+				<span class="am-footer-ysp">
+					<a id="godesktop" href="/">电脑版</a>
+				</span>
+				<span class="am-footer-divider"> | </span>
+				<span>
+					<a href="http://m.ziyouge.com">手机版</a>
+				</span>
+			</div>
+			<p class="am-text-center am-footer-p">
+				本站拒绝任何色情小说，一经发现，即作删除本站所收录作品、社区话题、书库评论属其个人行为，与本站立场无关
+			</p>
+			<div class="am-text-center"> 紫幽阁 BY 2017 </div>
+		</footer>
+
+		<script src="/js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/js/amazeui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/js/search.js" type="text/javascript" charset="utf-8"></script>
+		<script>
+		(function(){
+			var bp = document.createElement('script');
+			var curProtocol = window.location.protocol.split(':')[0];
+			if (curProtocol === 'https') {
+				bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+			}
+			else {
+				bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+			}
+			var s = document.getElementsByTagName("script")[0];
+			s.parentNode.insertBefore(bp, s);
+		})();
+		</script>
+		<script>(function(){
+		var src = (document.location.protocol == "http:") ? "http://js.passport.qihucdn.com/11.0.1.js?0fec43a8535417403ac67d5132f4c123":"https://jspassport.ssl.qhimg.com/11.0.1.js?0fec43a8535417403ac67d5132f4c123";
+		document.write('<script src="' + src + '" id="sozz"><\/script>');
+		})();
+		</script>
+	</body>
+
+</html>

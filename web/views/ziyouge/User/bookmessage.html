@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>维护_紫幽阁</title>
+		<meta name="description" content="紫幽阁维护后台" />
+		<meta name="keywords" content="紫幽阁">
+		<meta http-equiv="Cache-Control" content="no-siteapp" />
+		<link rel="icon" type="image/png" href="/i/favicon.png">
+		<link rel="stylesheet" type="text/css" href="/css/amazeui.css" />
+		<link rel="stylesheet" type="text/css" href="/css/app.css" />
+		<script>
+		var _hmt = _hmt || [];
+		(function() {
+		  var hm = document.createElement("script");
+		  hm.src = "https://hm.baidu.com/hm.js?2b86ba7cebe69b290c2ba632f4239768";
+		  var s = document.getElementsByTagName("script")[0]; 
+		  s.parentNode.insertBefore(hm, s);
+		})();
+		</script>
+	</head>
+
+	<body>
+		<header class="am-topbar ">
+			<div class="am-box am-g am-box-p">
+				<h1 class="am-topbar-brand">
+					<a href="/">紫幽阁</a>
+				</h1>
+				<button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-warning am-show-sm-only" data-am-collapse="{target: '#doc-topbar-collapse'}"><span class="am-sr-only">导航切换</span> <span class="am-icon-bars"></span></button>
+				<div class="am-collapse am-topbar-collapse" id="doc-topbar-collapse">
+					<ul class="am-nav am-nav-pills am-topbar-nav am-index-nav">
+						<li>
+							<a href="{:U(C('N_URL.FULL_LIST'))}">全本小说</a>
+						</li>
+						<li>
+							<a href="{:U(C('N_URL.UPDATE_LIST'))}">更新列表</a>
+						</li>
+
+					</ul>
+
+					<div class="am-topbar-right">
+						<a class="am-btn am-btn-warning am-btn-purple am-topbar-btn am-btn-sm" target="_blank" href="/search">搜索</a>
+					</div>
+				</div>
+			</div>
+		</header>
+				<main class="am-box am-g am-box-p">
+<div class="am-btn-group am-btn-group-justify">
+	<table class="am-table am-table-bordered am-table-striped" style="table-layout: fixed;">
+	    <thead>
+	        <tr>
+	            <th class="am-u-lg-2">书籍</th>
+	            <th class="am-u-lg-2">提交地址/用户</th>
+	            <th class="am-u-lg-6">详细描述</th>
+	            <th class="am-u-lg-2">提交时间</th>
+	        </tr>
+	    </thead>
+	    <tbody>
+			<foreach name="bookmessage"	item="vo">
+	        <tr>
+	            <td class="am-u-lg-2 am-in-height">{$vo.title}</td>
+	            <td class="am-u-lg-2 am-in-height"><a target="_blank" href="{$vo['chapterid']?'/read/':'/book/'}{$vo['articleid']}{$vo['chapterid']?'/':''}{$vo['chapterid']?$vo['chapterid']:''}">{$vo['chapterid']?'/read/':'/book/'}{$vo['articleid']}{$vo['chapterid']?'/':''}{$vo['chapterid']?$vo['chapterid']:''}</a>
+				<br/>{$vo.fromname}</td>
+	            <td class="am-u-lg-6 am-in-height">{$vo.content}</td>
+	            <td class="am-u-lg-2 am-in-height">{$vo.postdate|date='Y-m-d H:i',###}<br/>{$vo.readdate|date='Y-m-d H:i',###} <br/><input type="button" value="已修改" onclick="collectdel({$vo.messageid})" /></td>
+	        </tr>
+			</foreach>
+	    </tbody>
+	</table>
+</div>
+</main>
+		<hr data-am-widget="divider" style="" class="am-divider am-divider-dotted"/>
+		<footer data-am-widget="footer" class="am-footer am-footer-default">
+			<div class="am-text-center">
+				<span class="am-footer-ysp">
+					<a id="godesktop" href="/">电脑版</a>
+				</span>
+				<span class="am-footer-divider"> | </span>
+				<span>
+					<a href="http://m.ziyouge.com">手机版</a>
+				</span>
+			</div>
+			<p class="am-text-center am-footer-p">
+				本站拒绝任何色情小说，一经发现，即作删除本站所收录作品、社区话题、书库评论属其个人行为，与本站立场无关
+			</p>
+			<div class="am-text-center"> 紫幽阁 BY 2017 </div>
+		</footer>
+		<script src="/js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/js/jquery.form.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/js/amazeui.min.js" type="text/javascript" charset="utf-8"></script>
+
+		<script src="/js/user.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/js/app.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/js/search.js" type="text/javascript" charset="utf-8"></script>
+		<script>
+			function collectdel(id){
+			    $.ajax({
+					type:"post",
+					url:"/collectdel",
+					dataType:"json",
+					timeout:"5000",
+					data:{message:id},
+					beforeSend:function(){
+						
+					},
+					error:function(xhr){
+						alert('请重试!');
+					},
+					success:function(data){
+						alert(data.info);	
+						return false;
+					}
+				});
+			}
+		</script>
+</body>
+</html>
